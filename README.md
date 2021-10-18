@@ -8,12 +8,18 @@ SBM has been published by IEEE in September 2019:
 # Paper Abstract
 Overlapping clusters and different density clusters are recurrent phenomena of neuronal datasets, because of how neurons fire. We propose a clustering method that is able to identify clusters of arbitrary shapes, having different densities, and potentially overlapped. The Space Breakdown Method (SBM) divides the space into chunks of equal sizes. Based on the number of points inside the chunk, cluster centers are found and expanded. Even if we consider the particularities of neuronal data in designing the algorithm – not all data points need to be clustered, and the data space has a relatively low dimensionality – it can be applied successfully to other domains involving overlapping and different density clusters as well. The experiments performed on benchmark synthetic data show that the proposed approach has similar or better results than two well-known clustering algorithms. 
 
+SBM results on a real dataset and a simulated dataset in comparison with K-Means and DBSCAN:
+![Real Data](./images/real_data.png)
+![Simulated Data](./images/simulated_data.png)
 
 # Git structure
 The github repository contains 3 main folders:
 - SBM-code : contains the code for SBM
 - data : contains data files that can be loaded to test SBM on
 - images: images that will be used for this readme
+
+The SBM-code folder structure:
+- run.py : 
 
 # Citation
 We would appreciate it if you cite the paper when you use this work:
@@ -38,7 +44,7 @@ E. Ardelean, A. Stanciu, M. Dinsoreanu, R. Potolea, C. Lemnaru and V. V. Moca, "
 
 # Additions
 The algorithm has been improved since its publishing by modifying the underlying data structure from an ndarray to a graph. The following image show the improvement of a simple example from 25 cells in the ndarray to only 22 nodes in the graph.
-![SBM structures](/images/sbm_structs.png)
+![SBM structures](./images/sbm_structs.png)
 
 # Contact
 If you have any questions about SBM, feel free to contact me. (Email: ardeleaneugenrichard@gmail.com)
