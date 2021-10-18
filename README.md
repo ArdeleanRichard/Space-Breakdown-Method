@@ -12,7 +12,7 @@ SBM results on a real dataset and a simulated dataset in comparison with K-Means
 ![Real Data](./images/real_data.png)
 ![Simulated Data](./images/simulated_data.png)
 
-# Git structure
+# Git repository structure
 The github repository contains 3 main folders:
 - SBM-code : contains the code for SBM
 - data : contains data files that can be loaded to test SBM on
@@ -44,7 +44,7 @@ E. Ardelean, A. Stanciu, M. Dinsoreanu, R. Potolea, C. Lemnaru and V. V. Moca, "
 
 # Additions
 The algorithm has been improved since its publishing by modifying the underlying data structure from an ndarray to a graph. The following image show the improvement of a simple example from 25 cells in the ndarray to only 22 nodes in the graph.
-![SBM structures](./images/sbm_structs.png)
+![SBM structures](../images/sbm_structs.png)
 
 # Contact
 If you have any questions about SBM, feel free to contact me. (Email: ardeleaneugenrichard@gmail.com)
