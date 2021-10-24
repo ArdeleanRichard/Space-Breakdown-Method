@@ -3,12 +3,14 @@ import sys
 import numpy as np
 from sklearn import preprocessing
 
+from functions.SBM_functions import data_preprocessing
+
 sys.setrecursionlimit(100000)
 
 from functions import SBM_functions as fs
 
 
-def best(X, pn, ccThreshold=5, version=2):
+def best(X, pn, ccThreshold=5, version=2, adaptivePN=False):
     """
     Numpy parallelization version of SBM
     :param X: matrix - the points of the dataset
@@ -21,7 +23,7 @@ def best(X, pn, ccThreshold=5, version=2):
     #X_std = (X - X.min(axis=0)) / (X.max(axis=0) - X.min(axis=0))
     #X_scaled = X_std * (max - min) + min
     #X = fs.min_max_scaling(X, pn)
-    X = preprocessing.MinMaxScaler((0, pn)).fit_transform(X)
+    X, pn = data_preprocessing(X, pn, adaptivePN=adaptivePN)
     ndArray = fs.chunkify_numpy(X, pn)
 
     clusterCenters = fs.find_cluster_centers(ndArray, ccThreshold)

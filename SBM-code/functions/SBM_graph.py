@@ -5,9 +5,8 @@ from sklearn import preprocessing
 
 import networkx as nx
 
-
-def SBM(spikes, pn, ccThreshold=5, version=2):
-    spikes = preprocessing.MinMaxScaler((0, pn)).fit_transform(spikes)
+def SBM(spikes, pn, ccThreshold=5, version=2, adaptivePN = False):
+    spikes, pn = data_preprocessing(spikes, pn, adaptivePN=adaptivePN)
     spikes = np.floor(spikes).astype(int)
 
     graph = create_graph(spikes)
@@ -22,6 +21,21 @@ def SBM(spikes, pn, ccThreshold=5, version=2):
     labels = get_labels(graph, spikes)
 
     return labels
+
+def data_preprocessing(spikes, pn, adaptivePN=False):
+    if adaptivePN == True:
+        feature_variance = np.var(spikes, axis=0)
+        feature_variance = feature_variance / np.amax(feature_variance)
+        feature_variance = feature_variance * pn
+        spikes = preprocessing.MinMaxScaler((0, 1)).fit_transform(spikes)
+        spikes = spikes * np.array(feature_variance)
+
+        return spikes, feature_variance
+
+    spikes = preprocessing.MinMaxScaler((0, pn)).fit_transform(spikes)
+
+    return spikes, pn
+
 
 def count_removed(graph):
     count = 0

@@ -4,6 +4,9 @@ from mpl_toolkits.mplot3d import Axes3D
 import numpy as np
 from sklearn import preprocessing
 
+from functions.SBM_graph import data_preprocessing
+
+
 def plot(title, X, labels=None, plot=True, marker='o'):
     """
     Plots the dataset with or without labels
@@ -41,8 +44,7 @@ def plot_grid(title, X, pn, labels=None, plot=True, marker='o'):
 
     :returns None
     """
-
-    X = preprocessing.MinMaxScaler((0, pn)).fit_transform(X)
+    X, pn = data_preprocessing(X, pn, adaptivePN=True)
     if plot:
         nrDim = len(X[0])
         label_color = [cs.LABEL_COLOR_MAP[l] for l in labels]
@@ -50,8 +52,12 @@ def plot_grid(title, X, pn, labels=None, plot=True, marker='o'):
         plt.title(title)
         if nrDim == 2:
             ax = fig.gca()
-            ax.set_xticks(np.arange(0, pn, 1))
-            ax.set_yticks(np.arange(0, pn, 1))
+            if not isinstance(pn, int):
+                ax.set_xticks(np.arange(0, pn[0], 1))
+                ax.set_yticks(np.arange(0, pn[1], 1))
+            else:
+                ax.set_xticks(np.arange(0, pn, 1))
+                ax.set_yticks(np.arange(0, pn, 1))
             plt.scatter(X[:, 0], X[:, 1], marker=marker, c=label_color, s=25, edgecolor='k')
             plt.grid(True)
         if nrDim == 3:
