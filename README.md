@@ -60,7 +60,7 @@ The algorithm has been improved since its publishing by modifying the underlying
 ![SBM structures](/images/sbm_structs.PNG?raw=true)
 
 Another improvement, added later to the algorithm is an adaptive Partitioning Number, influenced by the variance of each feature. This shall improve the complexity of the algorithm a bit and will allow the use of the algorithm on datasets of higher dimensions.
-![Improvement](/images/sbm_improved.PNG?raw=true)
+![Improvement](/images/sbm_improved.png?raw=true)
 
 # Contact
 If you have any questions about SBM, feel free to contact me. (Email: ardeleaneugenrichard@gmail.com)
