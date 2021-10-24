@@ -32,7 +32,7 @@ def plot(title, X, labels=None, plot=True, marker='o'):
             plt.scatter(X[:, 0], X[:, 1], c=label_color, marker=marker, edgecolors='k')
 
 
-def plot_grid(title, X, pn, labels=None, plot=True, marker='o'):
+def plot_grid(title, X, pn, labels=None, plot=True, marker='o', adaptivePN=False):
     """
     Plots the dataset with grid
     :param title: string - the title of the plot
@@ -44,7 +44,7 @@ def plot_grid(title, X, pn, labels=None, plot=True, marker='o'):
 
     :returns None
     """
-    X, pn = data_preprocessing(X, pn, adaptivePN=True)
+    X, pn = data_preprocessing(X, pn, adaptivePN=adaptivePN)
     if plot:
         nrDim = len(X[0])
         label_color = [cs.LABEL_COLOR_MAP[l] for l in labels]
