@@ -33,5 +33,6 @@ def run_sbm_graph():
 
 
 if __name__ == '__main__':
+    run_sbm()
     run_sbm_graph()
 

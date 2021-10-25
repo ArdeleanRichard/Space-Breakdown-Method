@@ -5,6 +5,7 @@ from sklearn import preprocessing
 
 import networkx as nx
 
+
 def SBM(spikes, pn, ccThreshold=5, version=2, adaptivePN = False):
     spikes, pn = data_preprocessing(spikes, pn, adaptivePN=adaptivePN)
     spikes = np.floor(spikes).astype(int)
@@ -21,6 +22,7 @@ def SBM(spikes, pn, ccThreshold=5, version=2, adaptivePN = False):
     labels = get_labels(graph, spikes)
 
     return labels
+
 
 def data_preprocessing(spikes, pn, adaptivePN=False):
     if adaptivePN == True:

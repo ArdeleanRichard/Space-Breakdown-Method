@@ -16,19 +16,6 @@ import warnings
 warnings.simplefilter(action='ignore', category=FutureWarning)
 
 
-def data_preprocessing(spikes, pn, adaptivePN=False):
-    if adaptivePN == True:
-        feature_variance = np.var(spikes, axis=0)
-        feature_variance = feature_variance / np.amax(feature_variance)
-        feature_variance = feature_variance * pn
-        spikes = preprocessing.MinMaxScaler((0, 1)).fit_transform(spikes)
-        spikes = spikes * np.array(feature_variance)
-
-        return spikes, feature_variance
-
-    spikes = preprocessing.MinMaxScaler((0, pn)).fit_transform(spikes)
-
-    return spikes, pn
 
 # X_std = (X - X.min(axis=0)) / (X.max(axis=0) - X.min(axis=0))
 # X_scaled = X_std * (max - min) + min
