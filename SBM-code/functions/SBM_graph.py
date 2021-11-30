@@ -4,6 +4,7 @@ import numpy as np
 from sklearn import preprocessing
 
 import networkx as nx
+from sklearn.decomposition import PCA
 
 
 def SBM(spikes, pn, ccThreshold=5, version=2, adaptivePN = False):
@@ -11,7 +12,7 @@ def SBM(spikes, pn, ccThreshold=5, version=2, adaptivePN = False):
     spikes = np.floor(spikes).astype(int)
 
     graph = create_graph(spikes)
-
+    # print(len(graph.nodes))
     cluster_centers = get_cluster_centers(graph, ccThreshold)
 
     label = 1
@@ -21,16 +22,27 @@ def SBM(spikes, pn, ccThreshold=5, version=2, adaptivePN = False):
 
     labels = get_labels(graph, spikes)
 
-    return labels
+    return np.array(labels)
 
 
 def data_preprocessing(spikes, pn, adaptivePN=False):
     if adaptivePN == True:
+        # feature_variance = np.var(spikes, axis=0)
+        # print(feature_variance)
+
+        spikes = preprocessing.MinMaxScaler((0, 1)).fit_transform(spikes)
         feature_variance = np.var(spikes, axis=0)
+        # print(feature_variance)
+
+        # pca = PCA(n_components=2)
+        # pca.fit(spikes)
+        # feature_variance = pca.explained_variance_ratio_
         feature_variance = feature_variance / np.amax(feature_variance)
         feature_variance = feature_variance * pn
+        # feature_variance[1] = feature_variance[1] * 3
         spikes = preprocessing.MinMaxScaler((0, 1)).fit_transform(spikes)
         spikes = spikes * np.array(feature_variance)
+        # print(feature_variance)
 
         return spikes, feature_variance
 
@@ -38,13 +50,6 @@ def data_preprocessing(spikes, pn, adaptivePN=False):
 
     return spikes, pn
 
-
-def count_removed(graph):
-    count = 0
-    for node in list(graph.nodes):
-        if graph.nodes[node]['to_remove'] != 0:
-            count += 1
-    return count
 
 def get_neighbours(point):
     # ndim = the number of dimensions of a point=chunk
@@ -64,18 +69,16 @@ def get_neighbours(point):
 
     return neighbours
 
+
 def create_graph(spikes):
     g = nx.Graph()
 
-    index = 1
     for spike in spikes:
         string_spike = spike.tostring()
         if string_spike in g:
             g.nodes[string_spike]['count'] += 1
         else:
-            g.add_node(string_spike, count=1, label=0, merged=0, to_remove=0, index=index)
-            index += 1
-
+            g.add_node(string_spike, count=1, label=0)
 
     for node in list(g.nodes):
         neighbours = get_neighbours(np.fromstring(node, dtype=int))
@@ -237,12 +240,6 @@ def disambiguate(graph, questionPoint, expansionPoint, cc1, cc2, version):
         return 1
     else:
         return 2
-
-def find_father_label(graph, node):
-    if graph.nodes[node]['to_remove'] == 0:
-        return graph.nodes[node]['label']
-    else:
-        find_father_label(graph, graph.nodes[node]['to_remove'])
 
 def get_labels(graph, spikes):
     labels = []

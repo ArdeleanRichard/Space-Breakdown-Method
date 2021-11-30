@@ -41,9 +41,8 @@ def load_synthetic_data(datasetNumber):
 
     return X, y
 
-def generate_simulated_data():
+def generate_simulated_data(avgPoints=250):
     np.random.seed(0)
-    avgPoints = 250
     C1 = [-2, 0] + .8 * np.random.randn(avgPoints * 2, 2)
 
     C4 = [-2, 3] + .3 * np.random.randn(avgPoints // 5, 2)
@@ -55,7 +54,7 @@ def generate_simulated_data():
 
     C6 = [5, 6] + 1.0 * np.random.randn(avgPoints * 5, 2)
 
-    X = np.vstack((C1, C2, C3, C4, C5, C6))
+    X = np.vstack((C5, C1, C2, C3, C4, C6))
 
     c1Labels = np.full(len(C1), 1)
     c2Labels = np.full(len(C2), 2)
@@ -64,5 +63,5 @@ def generate_simulated_data():
     c5Labels = np.full(len(C5), 5)
     c6Labels = np.full(len(C6), 6)
 
-    y = np.hstack((c1Labels, c2Labels, c3Labels, c4Labels, c5Labels, c6Labels))
+    y = np.hstack((c5Labels, c1Labels, c2Labels, c3Labels, c4Labels, c6Labels))
     return X, y

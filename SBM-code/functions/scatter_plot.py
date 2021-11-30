@@ -7,7 +7,7 @@ from sklearn import preprocessing
 from functions.SBM_graph import data_preprocessing
 
 
-def plot(title, X, labels=None, plot=True, marker='o'):
+def plot(title, X, labels=None, plot=True, marker='o', alpha=None):
     """
     Plots the dataset with or without labels
     :param title: string - the title of the plot
@@ -22,14 +22,14 @@ def plot(title, X, labels=None, plot=True, marker='o'):
         plt.figure()
         plt.title(title)
         if labels is None:
-            plt.scatter(X[:, 0], X[:, 1], marker=marker, edgecolors='k')
+            plt.scatter(X[:, 0], X[:, 1], marker=marker, edgecolors='k', alpha=alpha)
         else:
             try:
                 label_color = [cs.LABEL_COLOR_MAP[l] for l in labels]
             except KeyError:
                 print('Too many labels! Using default colors...\n')
                 label_color = [l for l in labels]
-            plt.scatter(X[:, 0], X[:, 1], c=label_color, marker=marker, edgecolors='k')
+            plt.scatter(X[:, 0], X[:, 1], c=label_color, marker=marker, edgecolors='k', alpha=alpha)
 
 
 def plot_grid(title, X, pn, labels=None, plot=True, marker='o', adaptivePN=False):
