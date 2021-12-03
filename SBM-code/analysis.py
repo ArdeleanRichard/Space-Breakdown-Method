@@ -12,7 +12,8 @@ from functions import SBM_graph
 import functions.dataset as ds
 import functions.simulations_dataset as sds
 import functions.scatter_plot as sp
-from metric import ss_metric
+from metric import ss_metric, ss_metric_unweighted, ss_metric_unweighted2
+
 
 def try_metric(X, y, n_clusters, eps, pn=25):
     kmeans = KMeans(n_clusters=n_clusters, random_state=0).fit(X)
@@ -23,13 +24,25 @@ def try_metric(X, y, n_clusters, eps, pn=25):
 
     sbm_graph_labels = SBM_graph.SBM(X, pn, ccThreshold=5, version=2)
 
-    sbm_graph2_labels = SBM_graph.SBM(X, pn, ccThreshold=5, version=1, adaptivePN=True)
+    sbm_graph2_labels = SBM_graph.SBM(X, pn, ccThreshold=5, version=2, adaptivePN=True)
 
     print(f"KMeans: {ss_metric(y, kmeans.labels_, False):.3f}")
     print(f"DBSCAN: {ss_metric(y, dbscan.labels_, -1):.3f}")
     print(f"SBM - Original: {ss_metric(y, sbm_array_labels,0):.3f}")
     # print(f"ISBM: {ss_metric(y, sbm_graph_labels):.3f}")
-    print(f"ISBM2: {ss_metric(y, sbm_graph2_labels):.3f}")
+    print(f"ISBM2: {ss_metric(y, sbm_graph2_labels, 0):.3f}")
+
+    print()
+    print(f"KMeans: {ss_metric_unweighted(y, kmeans.labels_, False):.3f}")
+    print(f"DBSCAN: {ss_metric_unweighted(y, dbscan.labels_, -1):.3f}")
+    print(f"SBM - Original: {ss_metric_unweighted(y, sbm_array_labels,0):.3f}")
+    print(f"ISBM2: {ss_metric_unweighted(y, sbm_graph2_labels, 0):.3f}")
+
+    # print()
+    # print(f"KMeans: {ss_metric_unweighted2(y, kmeans.labels_, False):.3f}")
+    # print(f"DBSCAN: {ss_metric_unweighted2(y, dbscan.labels_, -1):.3f}")
+    # print(f"SBM - Original: {ss_metric_unweighted2(y, sbm_array_labels,0):.3f}")
+    # print(f"ISBM2: {ss_metric_unweighted2(y, sbm_graph2_labels, 0):.3f}")
     #test_labels = np.array(list(range(0, len(y))))
     #print(f"Test: {ss_metric(y, test_labels):.3f}")
     print()
@@ -38,7 +51,8 @@ def try_metric(X, y, n_clusters, eps, pn=25):
 # X, y = ds.generate_simulated_data()
 # try_metric(X, y, 6, 0.5)
 X, y = sds.get_dataset_simulation_pca_2d(4)
-try_metric(X, y, 5, 0.1, 10)
+try_metric(X, y, 5, 0.1, 25)
+
 # X, y = sds.get_dataset_simulation_pca_2d(22)
 # try_metric(X, y, 7, 0.1)
 # X, y = sds.get_dataset_simulation_pca_2d(21)
@@ -65,15 +79,16 @@ def compare_result_graph_vs_array_structure(X, y, n_clusters, eps, pn=25):
     sp.plot('DBSCAN on UO', X, dbscan.labels_, marker='o')
 
     sbm_array_labels = SBM.best(X, pn, ccThreshold=5, version=1)
-    # sp.plot_grid('SBM array on UO', X, pn, sbm_array_labels, marker='o')
+    sp.plot_grid('SBM array on UO', X, pn, sbm_array_labels, marker='o')
 
     sbm_graph_labels = SBM_graph.SBM(X, pn, ccThreshold=5, version=1)
     # sp.plot_grid('SBM graph on UO', X, pn, sbm_graph_labels, marker='o')
 
-    sbm_graph_labels = SBM_graph.SBM(X, pn, ccThreshold=5, version=1, adaptivePN=True)
+    sbm_graph_labels = SBM_graph.SBM(X, pn, ccThreshold=5, version=2, adaptivePN=True)
     sp.plot_grid('SBM graph2 on Sim4', X, pn, sbm_graph_labels, marker='o', adaptivePN=True)
 
     plt.show()
+
 
 
 def compare_time_graph_vs_array_structure(X, y, n_clusters, eps):
@@ -196,7 +211,7 @@ def compare_metrics_graph_vs_array_structure(X, y, n_clusters, eps, pn=25):
 
 # X, y = sds.get_dataset_simulation_pca_2d(4)
 # print(len(np.unique(y)))
-# compare_result_graph_vs_array_structure(X, y, 5, 0.1, 10)
+# compare_result_graph_vs_array_structure(X, y, 5, 0.1, 25)
 # compare_time_graph_vs_array_structure(X, y, 5, 0.1)
 # compare_metrics_graph_vs_array_structure(X, y, 5, 0.1, 10)
 
