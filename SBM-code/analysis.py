@@ -15,6 +15,28 @@ import functions.scatter_plot as sp
 from metric import ss_metric, ss_metric_unweighted, ss_metric_unweighted2
 
 
+
+def run_real_data():
+    units_in_channel, labels = ds.get_M045_009()
+
+    for (i, pn) in list([(4, 25), (6, 40), (17, 20), (26, 30)]):
+        print(i)
+        data = units_in_channel[i-1]
+        data = np.array(data)
+        pca_2d = PCA(n_components=2)
+        X = pca_2d.fit_transform(data)
+        km_labels = labels[i-1]
+
+        # sp.plot('Synthetic dataset (Sim1) ground truth', X, km_labels, marker='o', alpha=0.5)
+
+        sbm_graph_labels = SBM_graph.SBM(X, pn, ccThreshold=5, version=2, adaptivePN=True)
+        sp.plot_grid('SBM graph2', X, pn, sbm_graph_labels, marker='o', adaptivePN=True)
+
+    plt.show()
+
+# run_real_data()
+
+
 def try_metric(X, y, n_clusters, eps, pn=25):
     kmeans = KMeans(n_clusters=n_clusters, random_state=0).fit(X)
 
@@ -50,8 +72,8 @@ def try_metric(X, y, n_clusters, eps, pn=25):
 
 # X, y = ds.generate_simulated_data()
 # try_metric(X, y, 6, 0.5)
-X, y = sds.get_dataset_simulation_pca_2d(4)
-try_metric(X, y, 5, 0.1, 25)
+# X, y = sds.get_dataset_simulation_pca_2d(4)
+# try_metric(X, y, 5, 0.1, 25)
 
 # X, y = sds.get_dataset_simulation_pca_2d(22)
 # try_metric(X, y, 7, 0.1)
@@ -82,7 +104,7 @@ def compare_result_graph_vs_array_structure(X, y, n_clusters, eps, pn=25):
     sp.plot_grid('SBM array on UO', X, pn, sbm_array_labels, marker='o')
 
     sbm_graph_labels = SBM_graph.SBM(X, pn, ccThreshold=5, version=1)
-    # sp.plot_grid('SBM graph on UO', X, pn, sbm_graph_labels, marker='o')
+    sp.plot_grid('SBM graph on UO', X, pn, sbm_graph_labels, marker='o')
 
     sbm_graph_labels = SBM_graph.SBM(X, pn, ccThreshold=5, version=2, adaptivePN=True)
     sp.plot_grid('SBM graph2 on Sim4', X, pn, sbm_graph_labels, marker='o', adaptivePN=True)
@@ -126,7 +148,7 @@ def compare_time_graph_vs_array_structure(X, y, n_clusters, eps):
     print(f"DBSCAN time - {runs} runs: {dbscan_time/runs:.3f}s")
     print(f"SBM array time - {runs} runs: {sbm_array_time/runs:.3f}s")
     print(f"SBM graph time - {runs} runs: {sbm_graph_time/runs:.3f}s")
-    print(f"SBM graph2 time - {runs} runs: {sbm_graph_time/runs:.3f}s")
+    print(f"SBM graph2 time - {runs} runs: {sbm_graph2_time/runs:.3f}s")
 
 
 def compare_metrics_graph_vs_array_structure(X, y, n_clusters, eps, pn=25):

@@ -2,6 +2,10 @@ import numpy as np
 import pandas as pd
 from functions.constants import dataName, dataFiles
 
+
+from functions.realdata_ssd import parse_ssd_file, find_ssd_files, read_timestamps, separate_by_unit, \
+    read_waveforms, units_by_channel
+
 def load_real_data():
     # Importing the dataset
     data = pd.read_csv('../data/real_data.csv', skiprows=0)
@@ -65,3 +69,22 @@ def generate_simulated_data(avgPoints=250):
 
     y = np.hstack((c5Labels, c1Labels, c2Labels, c3Labels, c4Labels, c6Labels))
     return X, y
+
+
+def get_M045_009():
+    DATASET_PATH = '../data/M045_0009/'
+
+    spikes_per_unit, unit_electrode = parse_ssd_file(DATASET_PATH)
+    WAVEFORM_LENGTH = 58
+
+    timestamp_file, waveform_file, _, _ = find_ssd_files(DATASET_PATH)
+
+    timestamps = read_timestamps(timestamp_file)
+    timestamps_by_unit = separate_by_unit(spikes_per_unit, timestamps, 1)
+
+    waveforms = read_waveforms(waveform_file)
+    waveforms_by_unit = separate_by_unit(spikes_per_unit, waveforms, WAVEFORM_LENGTH)
+
+    units_in_channels, labels = units_by_channel(unit_electrode, waveforms_by_unit, data_length=WAVEFORM_LENGTH)
+
+    return units_in_channels, labels

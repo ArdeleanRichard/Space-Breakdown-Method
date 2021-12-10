@@ -11,7 +11,10 @@ def SBM(spikes, pn, ccThreshold=5, version=2, adaptivePN = False):
     spikes, pn = data_preprocessing(spikes, pn, adaptivePN=adaptivePN)
     spikes = np.floor(spikes).astype(int)
 
+    import time
+    # start = time.time()
     graph = create_graph(spikes)
+    # print(f"Create time: {time.time()-start}")
     # print(len(graph.nodes))
     cluster_centers = get_cluster_centers(graph, ccThreshold)
 
