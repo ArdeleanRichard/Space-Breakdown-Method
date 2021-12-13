@@ -123,7 +123,6 @@ def run_real_data():
     plt.show()
 
 
-
 if __name__ == '__main__':
     # run_sbm()
     # run_sbm_graph()

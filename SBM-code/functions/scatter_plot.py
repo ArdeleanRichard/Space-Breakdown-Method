@@ -47,7 +47,11 @@ def plot_grid(title, X, pn, labels=None, plot=True, marker='o', adaptivePN=False
     X, pn = data_preprocessing(X, pn, adaptivePN=adaptivePN)
     if plot:
         nrDim = len(X[0])
-        label_color = [cs.LABEL_COLOR_MAP[l] for l in labels]
+        try:
+            label_color = [cs.LABEL_COLOR_MAP[l] for l in labels]
+        except KeyError:
+            print('Too many labels! Using default colors...\n')
+            label_color = [l for l in labels]
         fig = plt.figure()
         plt.title(title)
         if nrDim == 2:

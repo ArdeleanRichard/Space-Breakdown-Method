@@ -10,9 +10,9 @@ def SBM(spikes, pn, ccThreshold=5, version=2, adaptivePN = False):
     spikes = np.floor(spikes).astype(int)
 
     # import time
-    start = time.time()
+    # start = time.time()
     graph = create_graph(spikes)
-    print(f"CG: {time.time()-start}, {len(graph.nodes)}, {len(graph.edges)}")
+    # print(f"CG: {time.time()-start}, {len(graph.nodes)}, {len(graph.edges)}")
     # print(len(graph.nodes))
 
     # start = time.time()
