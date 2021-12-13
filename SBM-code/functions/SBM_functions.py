@@ -1,17 +1,14 @@
 import math
 import sys
-
 import numpy as np
-from joblib import Parallel, delayed
+from joblib import Parallel, delayed, parallel_backend
 from sklearn import preprocessing
+import multiprocessing
+import warnings
 
 sys.setrecursionlimit(1000000)
-
-import multiprocessing
-
+parallel_backend('threading')
 num_cores = multiprocessing.cpu_count() - 2
-
-import warnings
 
 warnings.simplefilter(action='ignore', category=FutureWarning)
 

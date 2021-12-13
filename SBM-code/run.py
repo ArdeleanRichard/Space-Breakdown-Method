@@ -1,9 +1,12 @@
+import time
+
 import numpy as np
 from functions import SBM
 from functions import SBM_graph
 import functions.dataset as ds
 import functions.scatter_plot as sp
 import matplotlib.pyplot as plt
+from sklearn.decomposition import PCA
 
 
 def run_sbm():
@@ -11,12 +14,37 @@ def run_sbm():
     data, y = ds.load_synthetic_data(3)
 
     pn=25
+
     labels = SBM.best(data, pn, ccThreshold=5, version=2)
+
 
     sp.plot('GT' + str(len(data)), data, y, marker='o')
     sp.plot_grid('SBM' + str(len(data)), data, pn, labels, marker='o')
 
     plt.show()
+
+
+def sbm_times():
+    data, y = ds.load_real_data()
+    # data, y = ds.load_synthetic_data(3)
+
+    pn=25
+
+    start = time.time()
+    labels = SBM.sequential(data, pn, ccThreshold=5, version=2)
+    print(f"Time: {time.time() - start : .3f}")
+
+    start = time.time()
+    labels = SBM.parallel(data, pn, ccThreshold=5, version=2)
+    print(f"Time: {time.time() - start : .3f}")
+
+    start = time.time()
+    labels = SBM.best(data, pn, ccThreshold=5, version=2)
+    print(f"Time: {time.time() - start : .3f}")
+
+    start = time.time()
+    labels = SBM_graph.SBM(data, pn, ccThreshold=5, version=2)
+    print(f"Time: {time.time() - start : .3f}")
 
 
 def run_sbm_graph():
@@ -30,6 +58,7 @@ def run_sbm_graph():
     sp.plot_grid('SBM' + str(len(data)), data, pn, labels, marker='o')
 
     plt.show()
+
 
 def article_chunkify_presentation():
     avgPoints = 10
@@ -75,11 +104,30 @@ def article_chunkify_presentation():
     plt.show()
 
 
+def run_real_data():
+    units_in_channel, labels = ds.get_M045_009()
+
+    for (i, pn) in list([(4, 25), (6, 40), (17, 20), (26, 30)]):
+        print(i)
+        data = units_in_channel[i-1]
+        data = np.array(data)
+        pca_2d = PCA(n_components=2)
+        X = pca_2d.fit_transform(data)
+        km_labels = labels[i-1]
+
+        # sp.plot('Synthetic dataset (Sim1) ground truth', X, km_labels, marker='o', alpha=0.5)
+
+        sbm_graph_labels = SBM_graph.SBM(X, pn, ccThreshold=5, version=2, adaptivePN=True)
+        sp.plot_grid('SBM graph2', X, pn, sbm_graph_labels, marker='o', adaptivePN=True)
+
+    plt.show()
 
 
 
 if __name__ == '__main__':
     # run_sbm()
     # run_sbm_graph()
-    article_chunkify_presentation()
+    # sbm_times()
+    run_real_data()
+    # article_chunkify_presentation()
 

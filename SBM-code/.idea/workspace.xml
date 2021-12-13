@@ -4,8 +4,11 @@
     <list default="true" id="bc5f4cfb-fd7d-4a44-9fd3-69cac24e81a0" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/analysis.py" beforeDir="false" afterPath="$PROJECT_DIR$/analysis.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/functions/SBM.py" beforeDir="false" afterPath="$PROJECT_DIR$/functions/SBM.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/functions/SBM_functions.py" beforeDir="false" afterPath="$PROJECT_DIR$/functions/SBM_functions.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/functions/SBM_graph.py" beforeDir="false" afterPath="$PROJECT_DIR$/functions/SBM_graph.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/functions/dataset.py" beforeDir="false" afterPath="$PROJECT_DIR$/functions/dataset.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run.py" beforeDir="false" afterPath="$PROJECT_DIR$/run.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,7 +53,7 @@
       <recent name="C:\Users\Rici\Documents\Space-Breakdown-Method\SBM-code\functions" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.analysis">
+  <component name="RunManager" selected="Python.run (1)">
     <configuration name="SBM_graph" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="SBM-code" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -192,9 +195,9 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.run (1)" />
         <item itemvalue="Python.analysis" />
         <item itemvalue="Python.main_realdata_ssd" />
-        <item itemvalue="Python.run (1)" />
         <item itemvalue="Python.metric" />
         <item itemvalue="Python.SBM_graph" />
       </list>

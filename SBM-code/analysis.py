@@ -15,28 +15,6 @@ import functions.scatter_plot as sp
 from metric import ss_metric, ss_metric_unweighted, ss_metric_unweighted2
 
 
-
-def run_real_data():
-    units_in_channel, labels = ds.get_M045_009()
-
-    for (i, pn) in list([(4, 25), (6, 40), (17, 20), (26, 30)]):
-        print(i)
-        data = units_in_channel[i-1]
-        data = np.array(data)
-        pca_2d = PCA(n_components=2)
-        X = pca_2d.fit_transform(data)
-        km_labels = labels[i-1]
-
-        # sp.plot('Synthetic dataset (Sim1) ground truth', X, km_labels, marker='o', alpha=0.5)
-
-        sbm_graph_labels = SBM_graph.SBM(X, pn, ccThreshold=5, version=2, adaptivePN=True)
-        sp.plot_grid('SBM graph2', X, pn, sbm_graph_labels, marker='o', adaptivePN=True)
-
-    plt.show()
-
-# run_real_data()
-
-
 def try_metric(X, y, n_clusters, eps, pn=25):
     kmeans = KMeans(n_clusters=n_clusters, random_state=0).fit(X)
 
@@ -74,7 +52,6 @@ def try_metric(X, y, n_clusters, eps, pn=25):
 # try_metric(X, y, 6, 0.5)
 # X, y = sds.get_dataset_simulation_pca_2d(4)
 # try_metric(X, y, 5, 0.1, 25)
-
 # X, y = sds.get_dataset_simulation_pca_2d(22)
 # try_metric(X, y, 7, 0.1)
 # X, y = sds.get_dataset_simulation_pca_2d(21)
@@ -112,8 +89,7 @@ def compare_result_graph_vs_array_structure(X, y, n_clusters, eps, pn=25):
     plt.show()
 
 
-
-def compare_time_graph_vs_array_structure(X, y, n_clusters, eps):
+def compare_time_graph_vs_array_structure(X, y, n_clusters, eps, runs=25):
     print(len(X))
     pn = 25
 
@@ -122,23 +98,23 @@ def compare_time_graph_vs_array_structure(X, y, n_clusters, eps):
     sbm_array_time = 0
     sbm_graph_time = 0
     sbm_graph2_time = 0
-    runs = 1
+
     for i in range(runs):
         start = time.time()
         kmeans = KMeans(n_clusters=n_clusters, random_state=0).fit(X)
         kmeans_time += (time.time() - start)
 
-        start = time.time()
-        dbscan = DBSCAN(eps=eps, min_samples=np.log(len(X))).fit(X)
-        dbscan_time += (time.time() - start)
+        # start = time.time()
+        # dbscan = DBSCAN(eps=eps, min_samples=np.log(len(X))).fit(X)
+        # dbscan_time += (time.time() - start)
 
-        start = time.time()
-        sbm_array_labels = SBM.sequential(X, pn, ccThreshold=5, version=1)
-        sbm_array_time += (time.time() - start)
+        # start = time.time()
+        # sbm_array_labels = SBM.sequential(X, pn, ccThreshold=5, version=1)
+        # sbm_array_time += (time.time() - start)
 
-        start = time.time()
-        sbm_graph_labels = SBM_graph.SBM(X, pn, ccThreshold=5, version=2)
-        sbm_graph_time += (time.time() - start)
+        # start = time.time()
+        # sbm_graph_labels = SBM_graph.SBM(X, pn, ccThreshold=5, version=2)
+        # sbm_graph_time += (time.time() - start)
 
         start = time.time()
         sbm_graph_labels = SBM_graph.SBM(X, pn, ccThreshold=5, version=2, adaptivePN=True)
@@ -224,49 +200,53 @@ def compare_metrics_graph_vs_array_structure(X, y, n_clusters, eps, pn=25):
 
 # X, y = ds.generate_simulated_data()
 # compare_result_graph_vs_array_structure(X, y, 6, 0.5)
-# compare_time_graph_vs_array_structure(X, y, 6, 0.5)
+# compare_time_graph_vs_array_structure(X, y, 6, 0.5, 100)
 # compare_metrics_graph_vs_array_structure(X, y, 6, 0.5)
 
 # X, y = sds.get_dataset_simulation_pca_2d(30)
 # compare_result_graph_vs_array_structure(X, y, 6, 0.1)
+# compare_time_graph_vs_array_structure(X, y, 6, 0.5, 100)
 # compare_metrics_graph_vs_array_structure(X, y, 6, 0.1, 30)
 
 # X, y = sds.get_dataset_simulation_pca_2d(4)
 # print(len(np.unique(y)))
 # compare_result_graph_vs_array_structure(X, y, 5, 0.1, 25)
-# compare_time_graph_vs_array_structure(X, y, 5, 0.1)
+# compare_time_graph_vs_array_structure(X, y, 5, 0.1, 100)
 # compare_metrics_graph_vs_array_structure(X, y, 5, 0.1, 10)
 
 # X, y = sds.get_dataset_simulation_pca_2d(21)
 # print(len(np.unique(y)))
 # compare_result_graph_vs_array_structure(X, y, 5, 0.1)
-# compare_time_graph_vs_array_structure(X, y, 5, 0.1)
+# compare_time_graph_vs_array_structure(X, y, 5, 0.1, 100)
 # compare_metrics_graph_vs_array_structure(X, y, 5, 0.1, 35)
 
 # X, y = sds.get_dataset_simulation_pca_2d(1)
 # print(len(np.unique(y)))
-# compare_result_graph_vs_array_structure(X, y, 5, 0.1)
+# compare_result_graph_vs_array_structure(X, y, 17, 0.1)
+# compare_time_graph_vs_array_structure(X, y, 17, 0.1, 100)
 # compare_metrics_graph_vs_array_structure(X, y, 17, 0.05, 46)
-
-# X, y = sds.get_dataset_simulation_pca_2d(16)
-# print(len(np.unique(y)))
-# compare_result_graph_vs_array_structure(X, y, 9, 0.1)
-# compare_time_graph_vs_array_structure(X, y, 9, 0.1)
-# compare_metrics_graph_vs_array_structure(X, y, 9, 0.1, 20)
 
 # X, y = sds.get_dataset_simulation_pca_2d(22)
 # print(len(np.unique(y)))
 # compare_result_graph_vs_array_structure(X, y, 7, 0.05, 50)
-# compare_time_graph_vs_array_structure(X, y, 7, 0.1)
+# compare_time_graph_vs_array_structure(X, y, 7, 0.1, 100)
 # compare_metrics_graph_vs_array_structure(X, y, 7, 0.05, 40)
 
 
-def compare_time_dimensions(nr_dim=3):
+def compare_time_dimensions(nr_dim=3, runs=25):
     X, y = sds.get_dataset_simulation(4)
     pca_3d = PCA(n_components=nr_dim)
     X = pca_3d.fit_transform(X)
 
-    compare_time_graph_vs_array_structure(X, y, 5, 0.1)
+    compare_time_graph_vs_array_structure(X, y, 5, 0.1, runs)
+
+
+def compare_time_samples():
+    for i in range(1, 15):
+        size = i * 250
+        X, y = ds.generate_simulated_data(size)
+        compare_time_graph_vs_array_structure(X, y, 6, 0.5, 100)
+
 
 def compare_metrics_dimensions(nr_dim, n_clusters, eps, pn=25):
     X, y = sds.get_dataset_simulation(4)
@@ -275,6 +255,7 @@ def compare_metrics_dimensions(nr_dim, n_clusters, eps, pn=25):
 
     print(nr_dim)
     compare_metrics_graph_vs_array_structure(X, y, n_clusters, eps, pn)
+
 
 def compare_result_dim(X, y, nr_dim, n_clusters, eps):
     pca_2d = PCA(n_components=2)
@@ -305,11 +286,11 @@ def compare_result_dim(X, y, nr_dim, n_clusters, eps):
 
 # X, y = sds.get_dataset_simulation(4)
 # print(len(np.unique(y)))
-# compare_time_dimensions(2)
-# compare_time_dimensions(3)
-# compare_time_dimensions(4)
-# compare_time_dimensions(5)
-# compare_time_dimensions(6)
+# compare_time_dimensions(2, 1)
+# compare_time_dimensions(3, 1)
+# compare_time_dimensions(4, 1)
+# compare_time_dimensions(5, 1)
+# compare_time_dimensions(6, 1)
 # compare_time_dimensions(7)
 # compare_time_dimensions(8)
 # compare_metrics_dimensions(2, 5, 0.1, 10)
@@ -317,7 +298,9 @@ def compare_result_dim(X, y, nr_dim, n_clusters, eps):
 # compare_metrics_dimensions(4, 5, 0.4, 8)
 # compare_metrics_dimensions(5, 5, 0.4)
 # compare_metrics_dimensions(6, 5, 0.4)
-# compare_result_dim(X, y, 2, 5, 0.1)7
+# compare_result_dim(X, y, 2, 5, 0.1)
 # compare_result_dim(X, y, 3, 5, 0.25)
 # compare_result_dim(X, y, 4, 5, 0.4)
+
+# compare_time_samples()
 

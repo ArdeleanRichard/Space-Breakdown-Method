@@ -1,29 +1,35 @@
 import math
-
+import time
 import numpy as np
 from sklearn import preprocessing
-
 import networkx as nx
-from sklearn.decomposition import PCA
 
 
 def SBM(spikes, pn, ccThreshold=5, version=2, adaptivePN = False):
     spikes, pn = data_preprocessing(spikes, pn, adaptivePN=adaptivePN)
     spikes = np.floor(spikes).astype(int)
 
-    import time
-    # start = time.time()
+    # import time
+    start = time.time()
     graph = create_graph(spikes)
-    # print(f"Create time: {time.time()-start}")
+    print(f"CG: {time.time()-start}, {len(graph.nodes)}, {len(graph.edges)}")
     # print(len(graph.nodes))
-    cluster_centers = get_cluster_centers(graph, ccThreshold)
 
+    # start = time.time()
+    cluster_centers = get_cluster_centers(graph, ccThreshold)
+    # print(f"CC: {time.time() - start}")
+
+    # start = time.time()
     label = 1
     for cc in cluster_centers:
         expand_cluster_center(graph, cc, label, cluster_centers, version)
         label += 1
+    # print(f"EX: {time.time() - start}")
 
+    # start = time.time()
     labels = get_labels(graph, spikes)
+    # print(f"DL: {time.time() - start}")
+
 
     return np.array(labels)
 
@@ -89,7 +95,6 @@ def create_graph(spikes):
             string_neighbour = neighbour.tostring()
             if string_neighbour in g:
                 g.add_edge(node, string_neighbour)
-
     return g
 
 
@@ -243,6 +248,7 @@ def disambiguate(graph, questionPoint, expansionPoint, cc1, cc2, version):
         return 1
     else:
         return 2
+
 
 def get_labels(graph, spikes):
     labels = []

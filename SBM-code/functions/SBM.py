@@ -1,4 +1,5 @@
 import sys
+import time
 
 import numpy as np
 from sklearn import preprocessing
@@ -101,8 +102,10 @@ def parallel(X, pn, ccThreshold=5, version=2):
 
     # 2. chunkification of the dataset into a matrix of "squares"(for 2d)
     # returns an array of pn for each dimension
+    start = time.time()
     ndArray = fs.chunkify_parallel(X, pn)
     # rotated = rotateMatrix(np.copy(ndArray))
+    print(f"{time.time() - start :.3f}")
 
     # 3, search of cluster centers (based on a guassian distrubution of the clusters) (current > all neighbours)
     # returns a list of points that are the cluster centers
@@ -121,7 +124,9 @@ def parallel(X, pn, ccThreshold=5, version=2):
 
     # 5. inverse of chunkification, from the labels array we get the label of each points
     # returns an array of the size of the initial dataset each containing the label for the corresponding point
+    start = time.time()
     labels = fs.dechunkify_parallel(X, labelsMatrix, pn)
+    print(f"{time.time() - start :.3f}")
     # print("number of actual clusters: ", nrClust)
 
     return labels

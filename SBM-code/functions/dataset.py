@@ -1,10 +1,10 @@
 import numpy as np
 import pandas as pd
+
 from functions.constants import dataName, dataFiles
-
-
 from functions.realdata_ssd import parse_ssd_file, find_ssd_files, read_timestamps, separate_by_unit, \
     read_waveforms, units_by_channel
+
 
 def load_real_data():
     # Importing the dataset
@@ -19,6 +19,7 @@ def load_real_data():
 
     X = np.hstack((c1, c2, c3))
     return X, None
+
 
 # datasetNumber = 1 => S1
 # datasetNumber = 2 => S2
@@ -44,6 +45,7 @@ def load_synthetic_data(datasetNumber):
             y[k] = y[k] - 1
 
     return X, y
+
 
 def generate_simulated_data(avgPoints=250):
     np.random.seed(0)
