@@ -3,11 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="bc5f4cfb-fd7d-4a44-9fd3-69cac24e81a0" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/analysis.py" beforeDir="false" afterPath="$PROJECT_DIR$/analysis.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/functions/SBM_graph.py" beforeDir="false" afterPath="$PROJECT_DIR$/functions/SBM_graph.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/functions/scatter_plot.py" beforeDir="false" afterPath="$PROJECT_DIR$/functions/scatter_plot.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/metric.py" beforeDir="false" afterPath="$PROJECT_DIR$/metric.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run.py" beforeDir="false" afterPath="$PROJECT_DIR$/run.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -109,6 +104,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main_realdata_ssd.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
@@ -185,12 +181,12 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Python.run" />
-      <item itemvalue="Python.analysis" />
-      <item itemvalue="Python.run (1)" />
       <item itemvalue="Python.SBM_graph" />
-      <item itemvalue="Python.metric" />
+      <item itemvalue="Python.analysis" />
       <item itemvalue="Python.main_realdata_ssd" />
+      <item itemvalue="Python.metric" />
+      <item itemvalue="Python.run (1)" />
+      <item itemvalue="Python.run" />
     </list>
     <recent_temporary>
       <list>
@@ -217,5 +213,12 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/SBM_code$dataset.coverage" NAME="dataset Coverage Results" MODIFIED="1637574323691" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/functions" />
+    <SUITE FILE_PATH="coverage/SBM_code$SBM_graph.coverage" NAME="SBM_graph Coverage Results" MODIFIED="1637766784326" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/functions" />
+    <SUITE FILE_PATH="coverage/SBM_code$metric.coverage" NAME="metric Coverage Results" MODIFIED="1637837891869" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/SBM_code$run__1_.coverage" NAME="run (1) Coverage Results" MODIFIED="1639219530790" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/SBM_code$analysis.coverage" NAME="analysis Coverage Results" MODIFIED="1638266905252" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
