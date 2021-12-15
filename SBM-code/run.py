@@ -1,6 +1,8 @@
 import time
 
 import numpy as np
+from sklearn import datasets
+
 from functions import SBM
 from functions import SBM_graph
 import functions.dataset as ds
@@ -12,10 +14,14 @@ from sklearn.decomposition import PCA
 def run_sbm():
     # data, y = ds.load_real_data()
     data, y = ds.load_synthetic_data(3)
+    # data, y = ds.generate_star_data()
+    # data, y = ds.generate_star_data2()
+    # data, y = datasets.make_circles(n_samples=2000, factor=0.5, noise=0.05)
+    # data, y = datasets.make_moons(n_samples=2000, noise=0.05)
 
     pn=25
 
-    labels = SBM.best(data, pn, ccThreshold=5, version=2)
+    labels = SBM.best(data, pn, ccThreshold=10, version=2)
 
 
     sp.plot('GT' + str(len(data)), data, y, marker='o')
@@ -124,9 +130,9 @@ def run_real_data():
 
 
 if __name__ == '__main__':
-    # run_sbm()
+    run_sbm()
     # run_sbm_graph()
     # sbm_times()
-    run_real_data()
+    # run_real_data()
     # article_chunkify_presentation()
 

@@ -47,6 +47,27 @@ def load_synthetic_data(datasetNumber):
     return X, y
 
 
+def generate_star_data(avgPoints=250):
+    np.random.seed(0)
+    C5 = [3, 2] + [1.0, 8] * np.random.randn(avgPoints * 4, 2)
+
+    C1 = [3, 2] + [8, 1.0] * np.random.randn(avgPoints * 4, 2)
+
+    X = np.vstack((C5, C1))
+
+    return X, None
+
+def generate_star_data2(avgPoints=250):
+    np.random.seed(0)
+    values = np.random.randn(avgPoints * 4, 1)
+    C5 = [3, 2] + np.hstack((values, values))
+
+    C1 = [3, 2] + np.hstack((values, -1 * values))
+
+    X = np.vstack((C5, C1))
+
+    return X, None
+
 def generate_simulated_data(avgPoints=250):
     np.random.seed(0)
     C1 = [-2, 0] + .8 * np.random.randn(avgPoints * 2, 2)
