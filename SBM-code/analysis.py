@@ -275,11 +275,11 @@ no_noise=False
 # X, y = sds.get_dataset_simulation_pca_2d(22)
 # try_metric(X, y, 7, 0.05, 46, 1, no_noise=no_noise)
 # compare_result_graph_vs_array_structure('Sim22', X, y, 7, 0.1, 46, 1)
-# TODO 30 OG - 35 I Pn=35 1.0, 0.999
+
 # X, y = sds.get_dataset_simulation_pca_2d(21)
 # try_metric(X, y, 5, 0.1, 20, 1, no_noise=no_noise) # 20 - 98.4
 # compare_result_graph_vs_array_structure('Sim21', X, y, 5, 0.1, 20, 1)
-# TODO 30/35 OG - V1-Pn=40 equality but better on I
+
 # X, y = sds.get_dataset_simulation_pca_2d(30)
 # try_metric(X, y, 6, 0.1, 40, 1)
 # compare_result_graph_vs_array_structure('Sim30', X, y, 6, 0.1, 40, 1)
@@ -342,5 +342,5 @@ no_noise=False
 # compare_result_dim(X, y, 3, 5, 0.25)
 # compare_result_dim(X, y, 4, 5, 0.4)
 
-# compare_time_samples()
+compare_time_samples()
 

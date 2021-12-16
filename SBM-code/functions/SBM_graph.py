@@ -39,7 +39,7 @@ def data_preprocessing(spikes, pn, adaptivePN=False):
         # feature_variance = np.var(spikes, axis=0)
         # print(feature_variance)
 
-        spikes = preprocessing.MinMaxScaler((0, 1)).fit_transform(spikes)
+        # spikes = preprocessing.MinMaxScaler((0, 1)).fit_transform(spikes)
         feature_variance = np.var(spikes, axis=0)
         # print(feature_variance)
 
@@ -91,18 +91,25 @@ def create_graph(spikes):
 
     for node in list(g.nodes):
         neighbours = get_neighbours(np.fromstring(node, dtype=int))
+
         for neighbour in neighbours:
             string_neighbour = neighbour.tostring()
             if string_neighbour in g:
                 g.add_edge(node, string_neighbour)
+
+    #print(nx.connected_components(g))
+    #print(len(list(nx.connected_components(g))))
     return g
 
 
 def check_maxima(graph, count, spike_id):
-    neighbours = get_neighbours(np.fromstring(spike_id, dtype=int))
+    neighbours = list(graph.neighbors(spike_id))
+    #neighbours = get_neighbours(np.fromstring(spike_id, dtype=int))
+    # for neighbour in neighbours:
+    #    string_neighbour = neighbour.tostring()
+    #    if neighbour in graph and graph.nodes[string_neighbour]['count'] > count:
     for neighbour in neighbours:
-        string_neighbour = neighbour.tostring()
-        if string_neighbour in graph and graph.nodes[string_neighbour]['count'] > count:
+        if graph.nodes[neighbour]['count'] > count:
             return False
     return True
 
@@ -120,11 +127,13 @@ def get_cluster_centers(graph, ccThreshold):
 def get_dropoff(graph, location):
     dropoff = 0
 
-    neighbours = get_neighbours(np.fromstring(location, dtype=int))
+    neighbours = list(graph.neighbors(location))
+    # neighbours = get_neighbours(np.fromstring(location, dtype=int))
+    #for neighbour in neighbours:
+        # neighbour = neighbour.tostring()
     for neighbour in neighbours:
-        string_neighbour = neighbour.tostring()
-        if string_neighbour in graph:
-            dropoff += ((graph.nodes[location]['count'] - graph.nodes[string_neighbour]['count']) ** 2) / graph.nodes[location]['count']
+        # if neighbour in graph:
+        dropoff += ((graph.nodes[location]['count'] - graph.nodes[neighbour]['count']) ** 2) / graph.nodes[location]['count']
     if dropoff > 0:
         return math.sqrt(dropoff / len(set(graph.neighbors(location))))
     return 0
@@ -155,9 +164,14 @@ def expand_cluster_center(graph, start, label, cluster_centers, version):
     while expansionQueue:
         point = expansionQueue.pop(0)
 
-        neighbours = get_neighbours(np.fromstring(point, dtype=int))
-        for neighbour in neighbours:
-            location = neighbour.tostring()
+        #TODO should you pass through the connected component knowing that neighbours^3 can be bigger than the number of nodes? TO actually find the neighbours?
+        neighbours = list(graph.neighbors(point))
+
+        #neighbours = get_neighbours(np.fromstring(point, dtype=int))
+
+        for location in neighbours:
+        #for neighbour in neighbours:
+            #location = neighbour.tostring()
 
             if version == 1:
                 number = dropoff * math.sqrt(get_distance(graph, start, location))
@@ -168,11 +182,12 @@ def expand_cluster_center(graph, start, label, cluster_centers, version):
                 if not graph.nodes[location]['visited'] and number < graph.nodes[location]['count'] <= graph.nodes[point]['count']:
                     graph.nodes[location]['visited'] = 1
 
-                    if graph.nodes[location]['label'] == label:
-                        expansionQueue.append(location)
-                    elif graph.nodes[location]['label'] == 0:
-                        expansionQueue.append(location)
+                    # if graph.nodes[location]['label'] == label:
+                    #     expansionQueue.append(location)
+                    #     print('when')
+                    if graph.nodes[location]['label'] == 0:
                         graph.nodes[location]['label'] = label
+                        expansionQueue.append(location)
 
                     else:
                         oldLabel = graph.nodes[location]['label']
