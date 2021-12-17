@@ -291,15 +291,15 @@ no_noise=False
 # compare_time_graph_vs_array_structure(X, y, 6, 0.5, 100)
 # compare_metrics_graph_vs_array_structure('UO', X, y, 6, 0.5, 25)
 
-X, y = sds.get_dataset_simulation_pca_2d(4)
+# X, y = sds.get_dataset_simulation_pca_2d(4)
 # print(len(np.unique(y)))
-compare_result_graph_vs_array_structure('Sim4', X, y, 5, 0.1, 25)
+# compare_result_graph_vs_array_structure('Sim4', X, y, 5, 0.1, 25)
 # compare_time_graph_vs_array_structure(X, y, 5, 0.1, 100)
 # compare_metrics_graph_vs_array_structure('Sim4', X, y, 5, 0.1, 25)
 
 # X, y = sds.get_dataset_simulation_pca_2d(1)
 # print(len(np.unique(y)))
-# compare_result_graph_vs_array_structure(X, y, 17, 0.1)
+# compare_result_graph_vs_array_structure('Sim1', X, y, 17, 0.1, 46)
 # compare_time_graph_vs_array_structure(X, y, 17, 0.1, 100)
 # compare_metrics_graph_vs_array_structure('Sim1', X, y, 17, 0.05, 46)
 
@@ -312,12 +312,12 @@ compare_result_graph_vs_array_structure('Sim4', X, y, 5, 0.1, 25)
 
 # X, y = sds.get_dataset_simulation_pca_2d(21)
 # print(len(np.unique(y)))
-# compare_result_graph_vs_array_structure(X, y, 5, 0.1)
+# compare_result_graph_vs_array_structure('Sim21', X, y, 5, 0.1, 20)
 # compare_time_graph_vs_array_structure(X, y, 5, 0.1, 100)
 # compare_metrics_graph_vs_array_structure('Sim21', X, y, 5, 0.1, 20)
 
 # X, y = sds.get_dataset_simulation_pca_2d(30)
-# compare_result_graph_vs_array_structure('Sim30', X, y, 6, 0.1, 30)
+# compare_result_graph_vs_array_structure('Sim30', X, y, 6, 0.1, 40)
 # compare_time_graph_vs_array_structure(X, y, 6, 0.5, 100)
 # compare_metrics_graph_vs_array_structure('Sim30', X, y, 6, 0.1, 40)
 
