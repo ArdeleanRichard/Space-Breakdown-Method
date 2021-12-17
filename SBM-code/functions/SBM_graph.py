@@ -5,7 +5,7 @@ from sklearn import preprocessing
 import networkx as nx
 
 
-def SBM(spikes, pn, ccThreshold=5, version=2, adaptivePN = False):
+def SBM(spikes, pn, ccThreshold=5, adaptivePN = False):
     spikes, pn = data_preprocessing(spikes, pn, adaptivePN=adaptivePN)
     spikes = np.floor(spikes).astype(int)
 
@@ -20,9 +20,9 @@ def SBM(spikes, pn, ccThreshold=5, version=2, adaptivePN = False):
     # print(f"CC: {time.time() - start}")
 
     # start = time.time()
-    label = 1
+    label = 0
     for cc in cluster_centers:
-        expand_cluster_center(graph, cc, label, cluster_centers, version)
+        expand_cluster_center(graph, cc, label, cluster_centers)
         label += 1
     # print(f"EX: {time.time() - start}")
 
@@ -39,7 +39,7 @@ def data_preprocessing(spikes, pn, adaptivePN=False):
         # feature_variance = np.var(spikes, axis=0)
         # print(feature_variance)
 
-        # spikes = preprocessing.MinMaxScaler((0, 1)).fit_transform(spikes)
+        spikes = preprocessing.MinMaxScaler((0, 1)).fit_transform(spikes)
         feature_variance = np.var(spikes, axis=0)
         # print(feature_variance)
 
@@ -87,7 +87,7 @@ def create_graph(spikes):
         if string_spike in g:
             g.nodes[string_spike]['count'] += 1
         else:
-            g.add_node(string_spike, count=1, label=0)
+            g.add_node(string_spike, count=1, label=-1)
 
     for node in list(g.nodes):
         neighbours = get_neighbours(np.fromstring(node, dtype=int))
@@ -124,22 +124,17 @@ def get_cluster_centers(graph, ccThreshold):
     return centers
 
 
-def get_dropoff(graph, location):
-    dropoff = 0
+def get_dropoff(graph, current):
+    neighbours = list(graph.neighbors(current))
+    counts = np.array([graph.nodes[neighbour]['count'] for neighbour in neighbours])
+    dropoff = graph.nodes[current]['count'] - np.mean(counts)
 
-    neighbours = list(graph.neighbors(location))
-    # neighbours = get_neighbours(np.fromstring(location, dtype=int))
-    #for neighbour in neighbours:
-        # neighbour = neighbour.tostring()
-    for neighbour in neighbours:
-        # if neighbour in graph:
-        dropoff += ((graph.nodes[location]['count'] - graph.nodes[neighbour]['count']) ** 2) / graph.nodes[location]['count']
     if dropoff > 0:
-        return math.sqrt(dropoff / len(set(graph.neighbors(location))))
+        return dropoff
     return 0
 
 
-def get_distance(graph, start, point):
+def get_distance(start, point):
     difference = np.subtract(np.fromstring(start, dtype=int), np.fromstring(point, dtype=int))
     squared = np.square(difference)
     dist = math.sqrt(np.sum(squared))
@@ -147,117 +142,97 @@ def get_distance(graph, start, point):
     return dist
 
 
-def expand_cluster_center(graph, start, label, cluster_centers, version):
+def expand_cluster_center(graph, center, label, cluster_centers):
+    # This is done for each expansion in order to be able to disambiguate
     for node in list(graph.nodes):
         graph.nodes[node]['visited'] = 0
 
     expansionQueue = []
 
-    if graph.nodes[start]['label'] == 0:
-        expansionQueue.append(start)
-        graph.nodes[start]['label'] = label
+    if graph.nodes[center]['label'] == -1:
+        expansionQueue.append(center)
+        graph.nodes[center]['label'] = label
 
-    graph.nodes[start]['visited'] = 1
+    graph.nodes[center]['visited'] = 1
 
-    dropoff = get_dropoff(graph, start)
+    dropoff = get_dropoff(graph, center)
 
     while expansionQueue:
-        point = expansionQueue.pop(0)
+        current = expansionQueue.pop(0)
 
         #TODO should you pass through the connected component knowing that neighbours^3 can be bigger than the number of nodes? TO actually find the neighbours?
-        neighbours = list(graph.neighbors(point))
+        neighbours = list(graph.neighbors(current))
 
         #neighbours = get_neighbours(np.fromstring(point, dtype=int))
 
-        for location in neighbours:
+        for neighbour in neighbours:
         #for neighbour in neighbours:
             #location = neighbour.tostring()
 
-            if version == 1:
-                number = dropoff * math.sqrt(get_distance(graph, start, location))
-            elif version == 2:
-                number = math.floor(math.sqrt(dropoff * get_distance(graph, start, location)))
+            if graph.nodes[neighbour]['visited'] == 0:
+                if graph.nodes[neighbour]['count'] <= graph.nodes[current]['count']:
+                    graph.nodes[neighbour]['visited'] = 1
 
-            try:
-                if not graph.nodes[location]['visited'] and number < graph.nodes[location]['count'] <= graph.nodes[point]['count']:
-                    graph.nodes[location]['visited'] = 1
-
-                    # if graph.nodes[location]['label'] == label:
-                    #     expansionQueue.append(location)
-                    #     print('when')
-                    if graph.nodes[location]['label'] == 0:
-                        graph.nodes[location]['label'] = label
-                        expansionQueue.append(location)
-
+                    if graph.nodes[neighbour]['label'] == label:
+                        # Arrives here when disRez 11 or 22
+                        pass
+                        # expansionQueue.append(location)
+                    elif graph.nodes[neighbour]['label'] == -1:
+                        graph.nodes[neighbour]['label'] = label
+                        expansionQueue.append(neighbour)
                     else:
-                        oldLabel = graph.nodes[location]['label']
+                        oldLabel = graph.nodes[neighbour]['label']
                         disRez = disambiguate(graph,
-                                              location,
-                                              point,
-                                              cluster_centers[label - 1],
-                                              cluster_centers[oldLabel - 1],
-                                              version)
+                                              neighbour,
+                                              cluster_centers[label],
+                                              cluster_centers[oldLabel])
+
                         # print(label, oldLabel, disRez)
                         if disRez == 1:
-                            graph.nodes[location]['label'] = label
-                            expansionQueue.append(location)
-                        elif disRez == 2 and version == 2:
-                            graph.nodes[location]['label'] = oldLabel
-                            expansionQueue.append(location)
+                            graph.nodes[neighbour]['label'] = label
+                            # print(np.fromstring(location, np.int))
+                            expansionQueue.append(neighbour)
+                        elif disRez == 2:
+                            graph.nodes[neighbour]['label'] = oldLabel
+                            expansionQueue.append(neighbour)
                         elif disRez == 11:
                             # current label wins
                             for node in list(graph.nodes):
                                 if graph.nodes[node]['label'] == oldLabel:
                                     graph.nodes[node]['label'] = label
-                            expansionQueue.append(location)
+                                    graph.nodes[node]['visited'] = 1
+                            expansionQueue.append(neighbour)
                         elif disRez == 22:
                             # old label wins
                             for node in list(graph.nodes):
                                 if graph.nodes[node]['label'] == label:
                                     graph.nodes[node]['label'] = oldLabel
+                                    graph.nodes[node]['visited'] = 1
                             label = oldLabel
-                            expansionQueue.append(location)
+                            expansionQueue.append(neighbour)
 
 
-            except KeyError:
-                pass
-
-
-def get_strength(graph, cc, questionPoint):
-    dist = get_distance(graph, cc, questionPoint)
-
-    strength = graph.nodes[questionPoint]['count'] / dist / graph.nodes[cc]['count']
-
-    return strength
-
-
-def disambiguate(graph, questionPoint, expansionPoint, cc1, cc2, version):
-    if (cc1 == questionPoint) or (cc2 == questionPoint):
-        if graph.nodes[cc1]['count'] > graph.nodes[cc2]['count']:
+def disambiguate(graph, questionPoint, current_cluster, old_cluster):
+    if (current_cluster == questionPoint) or (old_cluster == questionPoint):
+        if graph.nodes[current_cluster]['count'] > graph.nodes[old_cluster]['count']:
             return 11
         else:
             return 22
 
     # MERGE
     # cluster 2 was expanded first, but it is actually connected to a bigger cluster
-    if graph.nodes[cc2]['count'] == graph.nodes[questionPoint]['count']:
+    if graph.nodes[old_cluster]['count'] == graph.nodes[questionPoint]['count']:
         return 11
-    if version == 2:
-        # cluster 1 was expanded first, but it is actually connected to a bigger cluster
-        if graph.nodes[cc1]['count'] == graph.nodes[questionPoint]['count']:
-            return 22
+    # cluster 1 was expanded first, but it is actually connected to a bigger cluster
+    if graph.nodes[current_cluster]['count'] == graph.nodes[questionPoint]['count']:
+        return 22
 
-    if version == 1:
-        distanceToC1 = get_distance(graph, questionPoint, cc1)
-        distanceToC2 = get_distance(graph, questionPoint, cc2)
-        pointStrength = graph.nodes[questionPoint]['count']
 
-        c1Strength = graph.nodes[cc1]['count'] / pointStrength - get_dropoff(graph, cc1) * distanceToC1
-        c2Strength = graph.nodes[cc2]['count'] / pointStrength - get_dropoff(graph, cc2) * distanceToC2
+    distanceToC1 = get_distance(questionPoint, current_cluster)
+    distanceToC2 = get_distance(questionPoint, old_cluster)
 
-    elif version == 2:
-        c1Strength = get_strength(graph, cc1, questionPoint)
-        c2Strength = get_strength(graph, cc2, questionPoint)
+    c1Strength = graph.nodes[current_cluster]['count'] / get_dropoff(graph, current_cluster) - distanceToC1
+    c2Strength = graph.nodes[old_cluster]['count'] / get_dropoff(graph, old_cluster) - distanceToC2
 
     if c1Strength > c2Strength:
         return 1
