@@ -36,22 +36,13 @@ def SBM(spikes, pn, ccThreshold=5, adaptivePN = False):
 
 def data_preprocessing(spikes, pn, adaptivePN=False):
     if adaptivePN == True:
-        # feature_variance = np.var(spikes, axis=0)
-        # print(feature_variance)
-
         spikes = preprocessing.MinMaxScaler((0, 1)).fit_transform(spikes)
         feature_variance = np.var(spikes, axis=0)
-        # print(feature_variance)
 
-        # pca = PCA(n_components=2)
-        # pca.fit(spikes)
-        # feature_variance = pca.explained_variance_ratio_
         feature_variance = feature_variance / np.amax(feature_variance)
         feature_variance = feature_variance * pn
-        # feature_variance[1] = feature_variance[1] * 3
-        spikes = preprocessing.MinMaxScaler((0, 1)).fit_transform(spikes)
+
         spikes = spikes * np.array(feature_variance)
-        # print(feature_variance)
 
         return spikes, feature_variance
 

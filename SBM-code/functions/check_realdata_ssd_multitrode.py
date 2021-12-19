@@ -1,9 +1,8 @@
 import numpy as np
 
-from realdata_ssd_multitrode import parse_ssd_file, split_multitrode, select_data, plot_multitrode, \
-    plot_multitrodes
-from realdata_parsing import read_timestamps, read_waveforms
-from realdata_ssd import find_ssd_files, separate_by_unit, units_by_channel, plot_sorted_data
+from functions.realdata_ssd_multitrode import parse_ssd_file, split_multitrode, select_data, plot_multitrode, plot_multitrodes
+from functions.realdata_parsing import read_timestamps, read_waveforms
+from functions.realdata_ssd import find_ssd_files, separate_by_unit, units_by_channel, plot_sorted_data
 
 DATASET_PATH = '../../data/M045_RF_0008/'
 # DATASET_PATH = '../../data/M045_SRCS_0009/'

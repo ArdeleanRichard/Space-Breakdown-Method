@@ -1,10 +1,9 @@
 from sklearn.decomposition import PCA
 import numpy as np
 
-from realdata_ssd_1electrode import parse_ssd_file, \
-    plot_sorted_data_all_available_channels, plot_spikes_on_unit
-from realdata_parsing import read_timestamps, read_waveforms
-from realdata_ssd import find_ssd_files, separate_by_unit, units_by_channel, plot_sorted_data
+from functions.realdata_ssd_1electrode import parse_ssd_file, plot_sorted_data_all_available_channels, plot_spikes_on_unit
+from functions.realdata_parsing import read_timestamps, read_waveforms
+from functions.realdata_ssd import find_ssd_files, separate_by_unit, units_by_channel, plot_sorted_data
 
 # DATASET_PATH = '../data/M045_0005/'
 # change NR_CHANNELS=33

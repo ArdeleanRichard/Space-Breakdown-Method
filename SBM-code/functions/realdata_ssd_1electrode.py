@@ -1,7 +1,7 @@
 import os
 import numpy as np
 import matplotlib.pyplot as plt
-from realdata_ssd import get_data_from_unit, plot_sorted_data
+from functions.realdata_ssd import get_data_from_unit, plot_sorted_data
 
 WAVEFORM_LENGTH = 58
 TIMESTAMP_LENGTH = 1

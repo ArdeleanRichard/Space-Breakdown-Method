@@ -66,17 +66,13 @@ def run_sbm_graph():
 
     # X, y = sds.get_dataset_simulation_pca_2d(22)
     data, y = sds.get_dataset_simulation(22, 79, True)
-    # # apply pca_nonoise
-    # # data = preprocessing.MinMaxScaler((0, 1)).fit_transform(data)
     pca_2d = PCA(n_components=2)
     data = pca_2d.fit_transform(data)
-    pn = 40
+    pn = 46
 
-    labels1 = SBM_graph.SBM(data, pn, ccThreshold=5, version=1, adaptivePN=True)
-    # labels2 = SBM_graph.SBM(data, pn, ccThreshold=5, version=2, adaptivePN=True)
+    labels = SBM_graph.SBM(data, pn, ccThreshold=5, adaptivePN=True)
     sp.plot('GT' + str(len(data)), data, y, marker='o')
-    sp.plot_grid('SBM1-' + str(len(data)), data, pn, labels1, marker='o', adaptivePN=True)
-    # sp.plot_grid('SBM2-' + str(len(data)), data, pn, labels2, marker='o', adaptivePN=True)
+    sp.plot_grid('SBM-' + str(len(data)), data, pn, labels, marker='o', adaptivePN=True)
 
     plt.show()
 
@@ -146,8 +142,8 @@ def run_real_data():
 
 if __name__ == '__main__':
     # run_sbm()
-    # run_sbm_graph()
+    run_sbm_graph()
     # sbm_times()
-    run_real_data()
+    # run_real_data()
     # article_chunkify_presentation()
 
