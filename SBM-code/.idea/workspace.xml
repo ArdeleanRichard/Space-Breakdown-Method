@@ -9,10 +9,15 @@
       <change beforePath="$PROJECT_DIR$/../.idea/modules.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../.idea/vcs.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+<<<<<<< HEAD
       <change beforePath="$PROJECT_DIR$/functions/dataset.py" beforeDir="false" afterPath="$PROJECT_DIR$/functions/dataset.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/functions/realdata_ssd.py" beforeDir="false" afterPath="$PROJECT_DIR$/functions/realdata_ssd_1electrode.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/functions/scatter_plot.py" beforeDir="false" afterPath="$PROJECT_DIR$/functions/scatter_plot.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main_realdata_ssd.py" beforeDir="false" afterPath="$PROJECT_DIR$/functions/check_realdata_ssd_1electrode.py" afterDir="false" />
+=======
+      <change beforePath="$PROJECT_DIR$/analysis.py" beforeDir="false" afterPath="$PROJECT_DIR$/analysis.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run.py" beforeDir="false" afterPath="$PROJECT_DIR$/run.py" afterDir="false" />
+>>>>>>> 0765b35ec2ff0144bd3b9afded90747507b75bd0
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
