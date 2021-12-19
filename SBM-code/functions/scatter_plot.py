@@ -7,7 +7,7 @@ from sklearn import preprocessing
 from functions.SBM_graph import data_preprocessing
 
 
-def plot(title, X, labels=None, plot=True, marker='o', alpha=None):
+def plot(title, X, labels=None, plot=True, marker='o'):
     """
     Plots the dataset with or without labels
     :param title: string - the title of the plot
@@ -19,17 +19,30 @@ def plot(title, X, labels=None, plot=True, marker='o', alpha=None):
     :returns None
     """
     if plot:
-        plt.figure()
+        nrDim = len(X[0])
+        fig = plt.figure()
         plt.title(title)
-        if labels is None:
-            plt.scatter(X[:, 0], X[:, 1], marker=marker, edgecolors='k', alpha=alpha)
-        else:
-            try:
-                label_color = [cs.LABEL_COLOR_MAP[l] for l in labels]
-            except KeyError:
-                print('Too many labels! Using default colors...\n')
-                label_color = [l for l in labels]
-            plt.scatter(X[:, 0], X[:, 1], c=label_color, marker=marker, edgecolors='k', alpha=alpha)
+        if nrDim == 2:
+            if labels is None:
+                plt.scatter(X[:, 0], X[:, 1], marker=marker, edgecolors='k')
+            else:
+                try:
+                    label_color = [cs.LABEL_COLOR_MAP[l] for l in labels]
+                except KeyError:
+                    print('Too many labels! Using default colors...\n')
+                    label_color = [l for l in labels]
+                plt.scatter(X[:, 0], X[:, 1], c=label_color, marker=marker, edgecolors='k')
+        if nrDim == 3:
+            ax = fig.add_subplot(projection='3d')
+            if labels is None:
+                ax.scatter(X[:, 0], X[:, 1], X[:, 2], marker=marker, edgecolors='k')
+            else:
+                try:
+                    label_color = [cs.LABEL_COLOR_MAP[l] for l in labels]
+                except KeyError:
+                    print('Too many labels! Using default colors...\n')
+                    label_color = [l for l in labels]
+                ax.scatter(X[:, 0], X[:, 1], X[:, 2], c=label_color, marker=marker, edgecolors='k')
 
 
 def plot_grid(title, X, pn, labels=None, plot=True, marker='o', adaptivePN=False):
@@ -47,11 +60,7 @@ def plot_grid(title, X, pn, labels=None, plot=True, marker='o', adaptivePN=False
     X, pn = data_preprocessing(X, pn, adaptivePN=adaptivePN)
     if plot:
         nrDim = len(X[0])
-        try:
-            label_color = [cs.LABEL_COLOR_MAP[l] for l in labels]
-        except KeyError:
-            print('Too many labels! Using default colors...\n')
-            label_color = [l for l in labels]
+        label_color = [cs.LABEL_COLOR_MAP[l] for l in labels]
         fig = plt.figure()
         plt.title(title)
         if nrDim == 2:

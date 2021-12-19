@@ -2,8 +2,9 @@ import numpy as np
 import pandas as pd
 
 from functions.constants import dataName, dataFiles
-from functions.realdata_ssd import parse_ssd_file, find_ssd_files, read_timestamps, separate_by_unit, \
-    read_waveforms, units_by_channel
+from realdata_ssd_1electrode import parse_ssd_file
+from realdata_parsing import read_timestamps, read_waveforms
+from realdata_ssd import find_ssd_files, separate_by_unit, units_by_channel
 
 
 def load_real_data():

@@ -128,7 +128,7 @@ def article_chunkify_presentation():
 def run_real_data():
     units_in_channel, labels = ds.get_M045_009()
 
-    for (i, pn) in list([(4, 25), (6, 40), (17, 20), (26, 30)]):
+    for (i, pn) in list([(4, 25), (6, 40), (17, 15), (26, 30)]):
         print(i)
         data = units_in_channel[i-1]
         data = np.array(data)
