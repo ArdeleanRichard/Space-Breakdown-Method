@@ -5,7 +5,10 @@ from functions.realdata_parsing import read_timestamps, read_waveforms
 from functions.realdata_ssd import find_ssd_files, separate_by_unit, units_by_channel, plot_sorted_data
 
 DATASET_PATH = '../../data/M045_RF_0008/'
+# DATASET_PATH = '../../data/M045_RF_0008_19/'
+# DATASET_PATH = '../../data/M045_RF_0008_19/'
 # DATASET_PATH = '../../data/M045_SRCS_0009/'
+# DATASET_PATH = '../../data/M045_DRCT_0015/'
 
 spikes_per_unit, unit_multitrode, _ = parse_ssd_file(DATASET_PATH)
 MULTITRODE_WAVEFORM_LENGTH = 232
@@ -55,4 +58,4 @@ units_by_multitrodes = split_multitrode(units_in_multitrode, MULTITRODE_WAVEFORM
 
 # data = select_data(data=units_by_multitrodes, multitrode_nr=0, electrode_in_multitrode=0)
 plot_multitrodes(units_by_multitrodes, labels, nr_multitrodes=NR_MULTITRODES, nr_electrodes=NR_ELECTRODES_PER_MULTITRODE)
-# plot_multitrode(units_by_multitrodes, labels, 6, NR_ELECTRODES_PER_MULTITRODE)
+# plot_multitrode(units_by_multitrodes, labels, 6, NR_ELECTRODES_PER_MULTITRODE, nr_dim=3)

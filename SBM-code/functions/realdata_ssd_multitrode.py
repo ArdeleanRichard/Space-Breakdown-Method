@@ -54,9 +54,9 @@ def select_data(data, multitrode_nr, electrode_in_multitrode):
     return data[multitrode_nr][electrode_in_multitrode]
 
 
-def plot_multitrode(data, labels, multitrode_nr, nr_electrodes):
+def plot_multitrode(data, labels, multitrode_nr, nr_electrodes, nr_dim=2):
     for nr in range(nr_electrodes):
-        plot_sorted_data(f'Multitrode {multitrode_nr + 1} - Electrode {nr + 1}', data[multitrode_nr][nr], labels[multitrode_nr], nr_dim=2, show=True)
+        plot_sorted_data(f'Multitrode {multitrode_nr + 1} - Electrode {nr + 1}', data[multitrode_nr][nr], labels[multitrode_nr], nr_dim=nr_dim, show=True)
 
 
 def plot_multitrode2(data, labels, multitrode_nr, nr_electrodes):

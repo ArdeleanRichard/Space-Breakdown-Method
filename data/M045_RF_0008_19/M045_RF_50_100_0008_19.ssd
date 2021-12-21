@@ -1,0 +1,163 @@
+Spike Sorted Dataset (SSD)
+Format version:
+1.3
+
+Number of units:
+36
+
+List with the names of units:
+U01
+U02
+U03
+U04
+U05
+U06
+U07
+U08
+U09
+U10
+U11
+U12
+U13
+U14
+U15
+U16
+U17
+U18
+U19
+U20
+U21
+U22
+U23
+U24
+U25
+U26
+U27
+U28
+U29
+U30
+U31
+U32
+U33
+U34
+U35
+U36
+
+List with the recording elements (channels, tetrodes, etc) where each unit originates:
+Multitrode 1 [El_23,El_24,El_19,El_20]
+Multitrode 1 [El_23,El_24,El_19,El_20]
+Multitrode 1 [El_23,El_24,El_19,El_20]
+Multitrode 1 [El_23,El_24,El_19,El_20]
+Multitrode 2 [El_22,El_21,El_27,El_25]
+Multitrode 2 [El_22,El_21,El_27,El_25]
+Multitrode 2 [El_22,El_21,El_27,El_25]
+Multitrode 2 [El_22,El_21,El_27,El_25]
+Multitrode 3 [El_29,El_31,El_30,El_26]
+Multitrode 3 [El_29,El_31,El_30,El_26]
+Multitrode 4 [El_18,El_17,El_32,El_28]
+Multitrode 4 [El_18,El_17,El_32,El_28]
+Multitrode 4 [El_18,El_17,El_32,El_28]
+Multitrode 4 [El_18,El_17,El_32,El_28]
+Multitrode 4 [El_18,El_17,El_32,El_28]
+Multitrode 4 [El_18,El_17,El_32,El_28]
+Multitrode 4 [El_18,El_17,El_32,El_28]
+Multitrode 5 [El_03,El_07,El_04,El_02]
+Multitrode 5 [El_03,El_07,El_04,El_02]
+Multitrode 5 [El_03,El_07,El_04,El_02]
+Multitrode 5 [El_03,El_07,El_04,El_02]
+Multitrode 6 [El_01,El_05,El_09,El_06]
+Multitrode 6 [El_01,El_05,El_09,El_06]
+Multitrode 6 [El_01,El_05,El_09,El_06]
+Multitrode 6 [El_01,El_05,El_09,El_06]
+Multitrode 6 [El_01,El_05,El_09,El_06]
+Multitrode 6 [El_01,El_05,El_09,El_06]
+Multitrode 6 [El_01,El_05,El_09,El_06]
+Multitrode 7 [El_11,El_13,El_14,El_12]
+Multitrode 7 [El_11,El_13,El_14,El_12]
+Multitrode 8 [El_08,El_10,El_16,El_15]
+Multitrode 8 [El_08,El_10,El_16,El_15]
+Multitrode 8 [El_08,El_10,El_16,El_15]
+Multitrode 8 [El_08,El_10,El_16,El_15]
+Multitrode 8 [El_08,El_10,El_16,El_15]
+Multitrode 8 [El_08,El_10,El_16,El_15]
+
+Number of spikes in each unit:
+492
+258
+323
+121
+2320
+1303
+2154
+2776
+108
+157
+4023
+138
+973
+724
+344
+2967
+310
+40
+68
+1783
+750
+1254
+4167
+540
+109
+1252
+211
+421
+73
+248
+472
+1691
+1084
+302
+341
+1750
+
+Spike times and event sampling frequency [Hz]:
+32000.0
+
+Waveform internal sampling frequency [Hz] (can be different than the sampling of the spike times):
+32000.0
+
+Waveform length in samples:
+232
+
+Waveform spike align offset - the sample in waveform that is aligned to the spike (first spike in multitrodes):
+19
+
+Number of multitrode electrodes that were used for sorting (single electrodes = 1; tetrodes = 4; etc.):
+4
+
+Number of events (size of the list with event timestamps and list with event codes):
+320
+
+File holding spike timestamps for the units; binary file containing the time in samples from the beginning of the experiment (spikes of each unit are stored continuously); 32 bit signed integer file:
+M045_RF_50_100_0008_19.ssdst
+
+File holding spike amplitudes; binary file containing the amplitudes of spikes (matched 1:1 with the file holding spike timestamps); 32 bit IEEE 754-1985, single precision floating point file:
+M045_RF_50_100_0008_19.ssdsa
+
+File holding spike widths; binary file containing the widths (in samples) of spikes (matched 1:1 with the file holding spike timestamps); 32 bit IEEE 754-1985, single precision floating point file:
+M045_RF_50_100_0008_19.ssdsw
+
+File holding spike waveforms for the units; binary file containing the waveforms for all the units (waveforms for each unit are stored continuously); matched WaveformSampleNr:1 with the file holding spike timestamps; 32 bit IEEE 754-1985 file:
+M045_RF_50_100_0008_19.ssduw
+
+File holding unit statistics (average spike waveforms, spike widths); binary file with average & SD waveforms stored one after another for each unit, followed by the other statistics (spike width, etc); 32 bit IEEE 754-1985 file:
+M045_RF_50_100_0008_19.ssdus
+
+File holding event timestamps; timestamp is in samples; (32 bit signed integer file):
+M045_RF_50_100_0008_19.ssdet
+
+File holding codes of events corresponding to the event timestamps file; timestamp is in samples; (32 bit signed integer file):
+M045_RF_50_100_0008_19.ssdec
+
+Original recording length (in samples of spike times):
+13811200
+
