@@ -5,9 +5,11 @@ from functions.realdata_ssd_1electrode import parse_ssd_file, plot_sorted_data_a
 from functions.realdata_parsing import read_timestamps, read_waveforms
 from functions.realdata_ssd import find_ssd_files, separate_by_unit, units_by_channel, plot_sorted_data
 
-# DATASET_PATH = '../data/M045_0005/'
+# DATASET_PATH = '../../data/M045_0005/'
 # change NR_CHANNELS=33
-DATASET_PATH = '../../data/M045_SRCS_0009/'
+# DATASET_PATH = '../../data/M045_SRCS_0009/'
+DATASET_PATH = '../../data/M045_0009/'
+
 
 spikes_per_unit, unit_electrode = parse_ssd_file(DATASET_PATH)
 WAVEFORM_LENGTH = 58
@@ -56,6 +58,8 @@ plot_spikes_on_unit(waveforms_by_unit, 3, show=True)
 
 
 units_in_channels, labels = units_by_channel(unit_electrode, waveforms_by_unit, data_length=WAVEFORM_LENGTH, number_of_channels=NR_CHANNELS)
+# for id, data in enumerate(units_in_channels):
+#     print(id, len(data))
 plot_sorted_data("", units_in_channels[0], labels[0], nr_dim=3, show=True)
 plot_sorted_data("", units_in_channels[4], labels[4], nr_dim=3, show=True)
 plot_sorted_data("", units_in_channels[5], labels[5], nr_dim=3, show=True)
@@ -75,7 +79,7 @@ def timestamp_filter(tetrode_channels):
     print(len(t3))
     print(len(t4))
 
-    delay = 100
+    delay = 500
 
     t1_index = []
     t2_index = []
@@ -91,10 +95,10 @@ def timestamp_filter(tetrode_channels):
             t3_index.append(find_t3[0][0])
             t4_index.append(find_t4[0][0])
 
-    print(t1[t1_index])
-    print(t2[t2_index])
-    print(t3[t3_index])
-    print(t4[t4_index])
+    # print(t1[t1_index])
+    # print(t2[t2_index])
+    # print(t3[t3_index])
+    # print(t4[t4_index])
 
     return np.array(t1_index), np.array(t2_index), np.array(t3_index), np.array(t4_index)
 
