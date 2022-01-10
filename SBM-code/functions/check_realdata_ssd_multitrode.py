@@ -1,14 +1,14 @@
 import numpy as np
+from sklearn.decomposition import PCA
 
 from functions.realdata_ssd_multitrode import parse_ssd_file, split_multitrode, select_data, plot_multitrode, plot_multitrodes
 from functions.realdata_parsing import read_timestamps, read_waveforms
 from functions.realdata_ssd import find_ssd_files, separate_by_unit, units_by_channel, plot_sorted_data
 
-DATASET_PATH = '../../data/M045_RF_0008/'
-# DATASET_PATH = '../../data/M045_RF_0008_19/'
-# DATASET_PATH = '../../data/M045_RF_0008_19/'
-# DATASET_PATH = '../../data/M045_SRCS_0009/'
-# DATASET_PATH = '../../data/M045_DRCT_0015/'
+DATASET_PATH = '../../data/M046_0001_MT/'
+# DATASET_PATH = '../../data/M045_RF_0008_19_MT/'
+# DATASET_PATH = '../../data/M045_SRCS_0009_MT/'
+# DATASET_PATH = '../../data/M045_DRCT_0015_MT/'
 
 spikes_per_unit, unit_multitrode, _ = parse_ssd_file(DATASET_PATH)
 MULTITRODE_WAVEFORM_LENGTH = 232
@@ -54,8 +54,32 @@ print(f"Sum of lengths equal to total: {len(waveforms) == np.sum(np.array(wavefo
 print("--------------------------------------------")
 
 units_in_multitrode, labels = units_by_channel(unit_multitrode, waveforms_by_unit, data_length=MULTITRODE_WAVEFORM_LENGTH, number_of_channels=NR_MULTITRODES)
+# for unit in units_in_multitrode:
+#     print(len(unit))
 units_by_multitrodes = split_multitrode(units_in_multitrode, MULTITRODE_WAVEFORM_LENGTH, WAVEFORM_LENGTH)
+# for unit in units_by_multitrodes:
+#     print(len(unit))
 
 # data = select_data(data=units_by_multitrodes, multitrode_nr=0, electrode_in_multitrode=0)
-plot_multitrodes(units_by_multitrodes, labels, nr_multitrodes=NR_MULTITRODES, nr_electrodes=NR_ELECTRODES_PER_MULTITRODE)
-# plot_multitrode(units_by_multitrodes, labels, 6, NR_ELECTRODES_PER_MULTITRODE, nr_dim=3)
+# plot_multitrodes(units_by_multitrodes, labels, nr_multitrodes=NR_MULTITRODES, nr_electrodes=NR_ELECTRODES_PER_MULTITRODE)
+# plot_multitrode(units_by_multitrodes, labels, 1, NR_ELECTRODES_PER_MULTITRODE, nr_dim=2)
+plot_multitrode(units_by_multitrodes, labels, 3, NR_ELECTRODES_PER_MULTITRODE, nr_dim=3)
+# plot_multitrode(units_by_multitrodes, labels, 5, NR_ELECTRODES_PER_MULTITRODE, nr_dim=3)
+# plot_multitrode(units_by_multitrodes, labels, 7, NR_ELECTRODES_PER_MULTITRODE, nr_dim=3)
+
+# import plotly.express as px
+#
+# pca_ = PCA(n_components=3)
+# data_pca = pca_.fit_transform(units_by_multitrodes[1][0])
+# # print(np.array(data_pca).shape)
+# fig1 = px.scatter_3d(x=data_pca[:, 0], y=data_pca[:, 1], z=data_pca[:, 2], color=np.array(labels[1]))
+# fig1 = px.scatter(x=data_pca[:, 0], y=data_pca[:, 1], color=np.array(labels[1]))
+# fig1.show()
+#
+# fig2 = px.scatter_3d(units_by_multitrodes[1][1], color=labels)
+# fig3 = px.scatter_3d(units_by_multitrodes[1][2], color=labels)
+# fig4 = px.scatter_3d(units_by_multitrodes[1][3], color=labels)
+#
+# fig2.show()
+# fig3.show()
+# fig4.show()

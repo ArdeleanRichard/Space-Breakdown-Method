@@ -40,12 +40,15 @@ def parse_ssd_file(dir_name):
 def split_multitrode(units_in_multitrode, multitrode_length, length):
     units_by_electrodes = []
     for units in units_in_multitrode:
-        units = np.array(units)
-        units_by_electrode = []
-        for step in range(0, multitrode_length, length):
-            units_by_electrode.append(units[:, step:step+length])
+        if len(units) != 0:
+            units = np.array(units)
+            units_by_electrode = []
+            for step in range(0, multitrode_length, length):
+                units_by_electrode.append(units[:, step:step+length])
 
-        units_by_electrodes.append(units_by_electrode)
+            units_by_electrodes.append(units_by_electrode)
+        else:
+            units_by_electrodes.append([])
 
     return units_by_electrodes
 
