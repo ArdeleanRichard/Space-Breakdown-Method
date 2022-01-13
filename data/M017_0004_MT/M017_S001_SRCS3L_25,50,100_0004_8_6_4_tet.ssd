@@ -1,0 +1,109 @@
+Spike Sorted Dataset (SSD)
+Format version:
+1.3
+
+Number of units:
+18
+
+List with the names of units:
+U01
+U02
+U03
+U04
+U05
+U06
+U07
+U08
+U09
+U10
+U11
+U12
+U13
+U14
+U15
+U16
+U17
+U18
+
+List with the recording elements (channels, tetrodes, etc) where each unit originates:
+Multitrode 4 [El_18,El_17,El_32,El_28]
+Multitrode 4 [El_18,El_17,El_32,El_28]
+Multitrode 4 [El_18,El_17,El_32,El_28]
+Multitrode 4 [El_18,El_17,El_32,El_28]
+Multitrode 6 [El_01,El_05,El_09,El_06]
+Multitrode 6 [El_01,El_05,El_09,El_06]
+Multitrode 6 [El_01,El_05,El_09,El_06]
+Multitrode 6 [El_01,El_05,El_09,El_06]
+Multitrode 6 [El_01,El_05,El_09,El_06]
+Multitrode 6 [El_01,El_05,El_09,El_06]
+Multitrode 8 [El_08,El_10,El_16,El_15]
+Multitrode 8 [El_08,El_10,El_16,El_15]
+Multitrode 8 [El_08,El_10,El_16,El_15]
+Multitrode 8 [El_08,El_10,El_16,El_15]
+Multitrode 8 [El_08,El_10,El_16,El_15]
+Multitrode 8 [El_08,El_10,El_16,El_15]
+Multitrode 8 [El_08,El_10,El_16,El_15]
+Multitrode 8 [El_08,El_10,El_16,El_15]
+
+Number of spikes in each unit:
+1803
+3895
+5600
+252
+396
+1564
+9326
+4063
+8294
+837
+451
+262
+3061
+1225
+873
+5783
+406
+3576
+
+Spike times and event sampling frequency [Hz]:
+32000.0
+
+Waveform internal sampling frequency [Hz] (can be different than the sampling of the spike times):
+32000.0
+
+Waveform length in samples:
+232
+
+Waveform spike align offset - the sample in waveform that is aligned to the spike (first spike in multitrodes):
+19
+
+Number of multitrode electrodes that were used for sorting (single electrodes = 1; tetrodes = 4; etc.):
+4
+
+Number of events (size of the list with event timestamps and list with event codes):
+960
+
+File holding spike timestamps for the units; binary file containing the time in samples from the beginning of the experiment (spikes of each unit are stored continuously); 32 bit signed integer file:
+M017_S001_SRCS3L_25,50,100_0004_8_6_4_tet.ssdst
+
+File holding spike amplitudes; binary file containing the amplitudes of spikes (matched 1:1 with the file holding spike timestamps); 32 bit IEEE 754-1985, single precision floating point file:
+M017_S001_SRCS3L_25,50,100_0004_8_6_4_tet.ssdsa
+
+File holding spike widths; binary file containing the widths (in samples) of spikes (matched 1:1 with the file holding spike timestamps); 32 bit IEEE 754-1985, single precision floating point file:
+M017_S001_SRCS3L_25,50,100_0004_8_6_4_tet.ssdsw
+
+File holding spike waveforms for the units; binary file containing the waveforms for all the units (waveforms for each unit are stored continuously); matched WaveformSampleNr:1 with the file holding spike timestamps; 32 bit IEEE 754-1985 file:
+M017_S001_SRCS3L_25,50,100_0004_8_6_4_tet.ssduw
+
+File holding unit statistics (average spike waveforms, spike widths); binary file with average & SD waveforms stored one after another for each unit, followed by the other statistics (spike width, etc); 32 bit IEEE 754-1985 file:
+M017_S001_SRCS3L_25,50,100_0004_8_6_4_tet.ssdus
+
+File holding event timestamps; timestamp is in samples; (32 bit signed integer file):
+M017_S001_SRCS3L_25,50,100_0004_8_6_4_tet.ssdet
+
+File holding codes of events corresponding to the event timestamps file; timestamp is in samples; (32 bit signed integer file):
+M017_S001_SRCS3L_25,50,100_0004_8_6_4_tet.ssdec
+
+Original recording length (in samples of spike times):
+36297600
+

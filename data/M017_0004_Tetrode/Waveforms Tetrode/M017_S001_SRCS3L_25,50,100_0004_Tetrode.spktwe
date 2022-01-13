@@ -1,0 +1,86 @@
+SPKTWE Dataset (Spike Times, Waveform, and Events)
+Format version:
+1.2
+
+Number of electrodes per multitrode (1 = no multitrode; 4 = tetrode; etc.):
+4
+
+Number of stored data channels:
+8
+
+List with the names of stored channels:
+Multitrode 1 [El_23,El_24,El_19,El_20]
+Multitrode 2 [El_22,El_21,El_27,El_25]
+Multitrode 3 [El_29,El_31,El_30,El_26]
+Multitrode 4 [El_18,El_17,El_32,El_28]
+Multitrode 5 [El_03,El_07,El_04,El_02]
+Multitrode 6 [El_01,El_05,El_09,El_06]
+Multitrode 7 [El_11,El_13,El_14,El_12]
+Multitrode 8 [El_08,El_10,El_16,El_15]
+
+Number of spikes in each stored channel::
+869
+8937
+1888
+25273
+4801
+31903
+4923
+21617
+
+Spike times sampling frequency [Hz]:
+32000.0
+
+Recording length (in spike time samples):
+36297600
+
+Waveform internal sampling frequency [Hz] (can be different than the sampling of the spike times):
+32000.0
+
+Waveform length in samples:
+232
+
+Waveform spike align offset - the sample in waveform that is aligned to the spike:
+19
+
+Events sampling frequency [Hz]:
+32000.0
+
+Number of events (size of the list with event timestamps and list with event codes):
+960
+
+File holding spike timestamps; binary file containing the time in samples from the beginning of the experiment (each channel is stored continuously); 32 bit signed integer file:
+M017_S001_SRCS3L_25,50,100_0004_Tetrode.spiket
+
+File holding spike waveforms; binary file containing the contiguous waveforms for each spike (waveforms are stored one after another and contiguously for each channel); 32 bit IEEE 754-1985, single precision floating point:
+M017_S001_SRCS3L_25,50,100_0004_Tetrode.spikew
+
+File holding event timestamps; timestamp is in samples; (32 bit signed integer file):
+M017_S001_SRCS3L_25,50,100_0004_Tetrode.eventt
+
+File holding codes of events corresponding to the event timestamps file; timestamp is in samples; (32 bit signed integer file):
+M017_S001_SRCS3L_25,50,100_0004_Tetrode.eventc
+
+Type of threshold used to extract spikes (Negative, Positive, Both):
+Negative
+
+List with negative channel thresholds used to extract spikes (multiple thresholds for multitrode):
+-23.48672,-23.14711,-23.48177,-24.07206
+-25.45563,-23.69652,-22.99955,-24.26066
+-23.79915,-23.59139,-22.67362,-23.66550
+-25.04207,-24.81771,-24.81900,-25.34577
+-24.04061,-24.03217,-25.74441,-25.85903
+-28.48257,-28.58014,-29.14188,-28.30301
+-25.31334,-24.31734,-24.53655,-26.62678
+-32.94622,-32.48006,-30.83492,-34.26463
+
+List with positive channel thresholds used to extract spikes (average for multitrode):
+23.48672,23.14711,23.48177,24.07206
+25.45563,23.69652,22.99955,24.26066
+23.79915,23.59139,22.67362,23.66550
+25.04207,24.81771,24.81900,25.34577
+24.04061,24.03217,25.74441,25.85903
+28.48257,28.58014,29.14188,28.30301
+25.31334,24.31734,24.53655,26.62678
+32.94622,32.48006,30.83492,34.26463
+

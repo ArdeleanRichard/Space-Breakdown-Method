@@ -1,0 +1,141 @@
+Trial and baseline conditions file
+
+[Target conditional collections]
+ [Number of conditional collections]
+ 8
+   [Conditional collection 1]
+   [Number of conditionals]
+   2
+   [Conditional list]
+      [Conditional 1]
+      Contrast
+      3
+      100
+      [Conditional 2]
+      Direction
+      3
+      0
+   [Conditional collection 2]
+   [Number of conditionals]
+   2
+   [Conditional list]
+      [Conditional 1]
+      Contrast
+      3
+      100
+      [Conditional 2]
+      Direction
+      3
+      45
+   [Conditional collection 3]
+   [Number of conditionals]
+   2
+   [Conditional list]
+      [Conditional 1]
+      Contrast
+      3
+      100
+      [Conditional 2]
+      Direction
+      3
+      90
+   [Conditional collection 4]
+   [Number of conditionals]
+   2
+   [Conditional list]
+      [Conditional 1]
+      Contrast
+      3
+      100
+      [Conditional 2]
+      Direction
+      3
+      135
+   [Conditional collection 5]
+   [Number of conditionals]
+   2
+   [Conditional list]
+      [Conditional 1]
+      Contrast
+      3
+      100
+      [Conditional 2]
+      Direction
+      3
+      180
+   [Conditional collection 6]
+   [Number of conditionals]
+   2
+   [Conditional list]
+      [Conditional 1]
+      Contrast
+      3
+      100
+      [Conditional 2]
+      Direction
+      3
+      225
+   [Conditional collection 7]
+   [Number of conditionals]
+   2
+   [Conditional list]
+      [Conditional 1]
+      Contrast
+      3
+      100
+      [Conditional 2]
+      Direction
+      3
+      270
+   [Conditional collection 8]
+   [Number of conditionals]
+   2
+   [Conditional list]
+      [Conditional 1]
+      Contrast
+      3
+      100
+      [Conditional 2]
+      Direction
+      3
+      315
+[Baseline conditional collections per condition]
+[Number of conditions]
+8
+[Condition 1]
+ [Number of conditional collections]
+ 0
+[Condition 2]
+ [Number of conditional collections]
+ 0
+[Condition 3]
+ [Number of conditional collections]
+ 0
+[Condition 4]
+ [Number of conditional collections]
+ 0
+[Condition 5]
+ [Number of conditional collections]
+ 0
+[Condition 6]
+ [Number of conditional collections]
+ 0
+[Condition 7]
+ [Number of conditional collections]
+ 0
+[Condition 8]
+ [Number of conditional collections]
+ 0
+[Trial level conditional collections]
+ [Number of conditional collections]
+ 0
+[Trial level match conditionals]
+[Number of trial level match conditionals]
+0
+[Matched conditional pairs]
+[Baseline type]
+0
+[Baseline method]
+1
+[Inconsistency flag]
+0
