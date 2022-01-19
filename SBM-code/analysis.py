@@ -28,7 +28,7 @@ def try_metric(X, y, n_clusters, eps, pn=25, no_noise=True):
 
     print(f"KMeans: {ss_metric(y, kmeans.labels_):.3f}")
     print(f"DBSCAN: {ss_metric(y, dbscan.labels_):.3f}")
-    print(f"SBMog: {ss_metric(y, sbm_array_labels):.3f}")
+    # print(f"SBMog: {ss_metric(y, sbm_array_labels):.3f}")
     # print(f"ISBM: {ss_metric(y, sbm_graph_labels):.3f}")
     print(f"ISBM2: {ss_metric(y, sbm_graph2_labels):.3f}")
     # test_labels = np.array(list(range(0, len(y))))

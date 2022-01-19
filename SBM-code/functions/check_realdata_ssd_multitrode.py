@@ -1,14 +1,24 @@
 import numpy as np
+from sklearn.cluster import KMeans, DBSCAN
 from sklearn.decomposition import PCA
+from sklearn.metrics import adjusted_rand_score, adjusted_mutual_info_score, fowlkes_mallows_score, v_measure_score
 
+from analysis import purity_score
+from functions import SBM_graph, SBM
 from functions.realdata_ssd_multitrode import parse_ssd_file, split_multitrode, select_data, plot_multitrode, plot_multitrodes
-from functions.realdata_parsing import read_timestamps, read_waveforms, read_event_codes, read_event_timestamps
+from functions.realdata_parsing import read_timestamps, read_waveforms, read_event_timestamps, read_event_codes
 from functions.realdata_ssd import find_ssd_files, separate_by_unit, units_by_channel, plot_sorted_data
 
-DATASET_PATH = '../../data/M046_0001_MT/'
+# DATASET_PATH = '../../data/M046_0001_MT/'
 # DATASET_PATH = '../../data/M045_RF_0008_19_MT/'
 # DATASET_PATH = '../../data/M045_SRCS_0009_MT/'
 # DATASET_PATH = '../../data/M045_DRCT_0015_MT/'
+# DATASET_PATH = '../../data/M017_0004_MT/'
+# DATASET_PATH = '../../data/M017_MT/'
+from metric import ss_metric
+
+DATASET_PATH = '../../data/M017_0004_Tetrode/Units/'
+# DATASET_PATH = '../../data/M017_0004_Tetrode8/'
 
 spikes_per_unit, unit_multitrode, _ = parse_ssd_file(DATASET_PATH)
 MULTITRODE_WAVEFORM_LENGTH = 232
@@ -39,6 +49,7 @@ print(f"Spikes per channel parsed from file: {spikes_per_unit}")
 print(f"Timestamps per channel should be equal: {list(map(len, timestamps_by_unit))}")
 print(f"Assert equality: {list(spikes_per_unit) == list(map(len, timestamps_by_unit))}")
 print("--------------------------------------------")
+
 
 event_timestamps = read_event_timestamps(event_timestamps_filename)
 print(f"Event Timestamps found in file: {event_timestamps.shape}")
@@ -87,10 +98,100 @@ units_by_multitrodes = split_multitrode(units_in_multitrode, MULTITRODE_WAVEFORM
 
 # data = select_data(data=units_by_multitrodes, multitrode_nr=0, electrode_in_multitrode=0)
 # plot_multitrodes(units_by_multitrodes, labels, nr_multitrodes=NR_MULTITRODES, nr_electrodes=NR_ELECTRODES_PER_MULTITRODE)
-plot_multitrode(units_by_multitrodes, labels, 1, NR_ELECTRODES_PER_MULTITRODE, nr_dim=3)
+# plot_multitrode(units_by_multitrodes, labels, 1, NR_ELECTRODES_PER_MULTITRODE, nr_dim=3)
 # plot_multitrode(units_by_multitrodes, labels, 3, NR_ELECTRODES_PER_MULTITRODE, nr_dim=3)
 # plot_multitrode(units_by_multitrodes, labels, 5, NR_ELECTRODES_PER_MULTITRODE, nr_dim=3)
 # plot_multitrode(units_by_multitrodes, labels, 7, NR_ELECTRODES_PER_MULTITRODE, nr_dim=3)
+
+data = units_by_multitrodes[7][0]
+labels = labels[7]
+data = np.array(data)
+pca_ = PCA(n_components=3)
+data_pca = pca_.fit_transform(data)
+import scatter_plot as sp
+import matplotlib.pyplot as plt
+
+sp.plot("Ground truth of Electrode 1", data_pca, labels)
+
+kmeans = KMeans(n_clusters=4, random_state=0).fit(data_pca)
+sp.plot('K-Means on Electrode 1', data_pca, kmeans.labels_, marker='o')
+dbscan = DBSCAN(eps=20, min_samples=np.log(len(data_pca))).fit(data_pca)
+sp.plot('DBSCAN on Electrode 1', data_pca, dbscan.labels_, marker='o')
+sbm_graph2_labels = SBM_graph.SBM(data_pca, pn=20, ccThreshold=5, adaptivePN=True)
+sp.plot('SBM on Electrode 1', data_pca, sbm_graph2_labels, marker='o')
+
+plt.show()
+
+def try_metric(X, y, n_clusters, eps, pn=25, no_noise=True):
+    kmeans = KMeans(n_clusters=n_clusters, random_state=0).fit(X)
+
+    dbscan = DBSCAN(eps=eps, min_samples=np.log(len(X))).fit(X)
+
+    sbm_array_labels = SBM.best(X, pn, ccThreshold=5)
+
+    sbm_graph_labels = SBM_graph.SBM(X, pn, ccThreshold=5)
+
+    sbm_graph2_labels = SBM_graph.SBM(X, pn, ccThreshold=5, adaptivePN=True)
+
+    print(f"KMeans: {ss_metric(y, kmeans.labels_):.3f}")
+    print(f"DBSCAN: {ss_metric(y, dbscan.labels_):.3f}")
+    # print(f"SBMog: {ss_metric(y, sbm_array_labels):.3f}")
+    # print(f"ISBM: {ss_metric(y, sbm_graph_labels):.3f}")
+    print(f"ISBM2: {ss_metric(y, sbm_graph2_labels):.3f}")
+    # test_labels = np.array(list(range(0, len(y))))
+    # print(f"Test: {ss_metric(y, test_labels):.3f}")
+
+def compare_metrics_graph_vs_array_structure(Data, X, y, n_clusters, eps, pn=25):
+    # dataset
+
+    kmeans = KMeans(n_clusters=n_clusters, random_state=0).fit(X)
+
+    dbscan = DBSCAN(eps=eps, min_samples=np.log(len(X))).fit(X)
+
+    sbm_array_labels = SBM.sequential(X, pn, ccThreshold=5)
+
+    sbm_graph_labels = SBM_graph.SBM(X, pn, ccThreshold=5)
+    sbm_graph2_labels = SBM_graph.SBM(X, pn, ccThreshold=5, adaptivePN=True)
+
+    #metric - ARI
+    print(f"{Data} - ARI: "
+          f"KMeans={adjusted_rand_score(y, kmeans.labels_):.3f}\t"
+          f"DBSCAN={adjusted_rand_score(y, dbscan.labels_):.3f}\t"
+          f"SBM_array={adjusted_rand_score(y, sbm_array_labels):.3f}\t"
+          # f"SBM_graph={adjusted_rand_score(y, sbm_graph_labels):.3f}\t"
+          f"SBM_graph2={adjusted_rand_score(y, sbm_graph2_labels):.3f}\t")
+
+    print(f"{Data} - AMI: "
+          f"KMeans={adjusted_mutual_info_score(y, kmeans.labels_):.3f}\t"
+          f"DBSCAN={adjusted_mutual_info_score(y, dbscan.labels_):.3f}\t"
+          f"SBM_array={adjusted_mutual_info_score(y, sbm_array_labels):.3f}\t"
+          # f"SBM_graph={adjusted_mutual_info_score(y, sbm_graph_labels):.3f}\t"
+          f"SBM_graph2={adjusted_mutual_info_score(y, sbm_graph2_labels):.3f}\t")
+
+    print(f"{Data} - Purity: "
+          f"KMeans={purity_score(y, kmeans.labels_):.3f}\t"
+          f"DBSCAN={purity_score(y, dbscan.labels_):.3f}\t"
+          f"SBM_array={purity_score(y, sbm_array_labels):.3f}\t"
+          # f"SBM_graph={purity_score(y, sbm_graph_labels):.3f}\t"
+          f"SBM_graph2={purity_score(y, sbm_graph2_labels):.3f}\t")
+
+    print(f"{Data} - FMI: "
+          f"KMeans={fowlkes_mallows_score(y, kmeans.labels_):.3f}\t"
+          f"DBSCAN={fowlkes_mallows_score(y, dbscan.labels_):.3f}\t"
+          f"SBM_array={fowlkes_mallows_score(y, sbm_array_labels):.3f}\t"
+          # f"SBM_graph={fowlkes_mallows_score(y, sbm_graph_labels):.3f}\t"
+          f"SBM_graph2={fowlkes_mallows_score(y, sbm_graph2_labels):.3f}\t")
+
+    print(f"{Data} - VM: "
+          f"KMeans={v_measure_score(y, kmeans.labels_):.3f}\t"
+          f"DBSCAN={v_measure_score(y, dbscan.labels_):.3f}\t"
+          f"SBM_array={v_measure_score(y, sbm_array_labels):.3f}\t"
+          # f"SBM_graph={v_measure_score(y, sbm_graph_labels):.3f}\t"
+          f"SBM_graph2={v_measure_score(y, sbm_graph2_labels):.3f}\t")
+
+
+try_metric(data_pca, labels, 4, 20, 20)
+compare_metrics_graph_vs_array_structure("Electrod1", data_pca, labels, 4, 20, 20)
 
 # import plotly.express as px
 #
@@ -108,5 +209,3 @@ plot_multitrode(units_by_multitrodes, labels, 1, NR_ELECTRODES_PER_MULTITRODE, n
 # fig2.show()
 # fig3.show()
 # fig4.show()
-
-
