@@ -17,7 +17,8 @@ from functions.realdata_ssd import find_ssd_files, separate_by_unit, units_by_ch
 # DATASET_PATH = '../../data/M017_MT/'
 from metric import ss_metric
 
-DATASET_PATH = '../../data/M017_0004_Tetrode/Units/'
+# DATASET_PATH = '../../data/M017_0004_Tetrode/Units/'
+DATASET_PATH = '../../data/M017_0004_Tetrode_try2/ssd/'
 # DATASET_PATH = '../../data/M017_0004_Tetrode8/'
 
 spikes_per_unit, unit_multitrode, _ = parse_ssd_file(DATASET_PATH)
@@ -115,7 +116,7 @@ sp.plot("Ground truth of Electrode 1", data_pca, labels)
 
 kmeans = KMeans(n_clusters=4, random_state=0).fit(data_pca)
 sp.plot('K-Means on Electrode 1', data_pca, kmeans.labels_, marker='o')
-dbscan = DBSCAN(eps=20, min_samples=np.log(len(data_pca))).fit(data_pca)
+dbscan = DBSCAN(eps=18, min_samples=np.log(len(data_pca))).fit(data_pca)
 sp.plot('DBSCAN on Electrode 1', data_pca, dbscan.labels_, marker='o')
 sbm_graph2_labels = SBM_graph.SBM(data_pca, pn=20, ccThreshold=5, adaptivePN=True)
 sp.plot('SBM on Electrode 1', data_pca, sbm_graph2_labels, marker='o')
@@ -190,8 +191,8 @@ def compare_metrics_graph_vs_array_structure(Data, X, y, n_clusters, eps, pn=25)
           f"SBM_graph2={v_measure_score(y, sbm_graph2_labels):.3f}\t")
 
 
-try_metric(data_pca, labels, 4, 20, 20)
-compare_metrics_graph_vs_array_structure("Electrod1", data_pca, labels, 4, 20, 20)
+try_metric(data_pca, labels, 4, 18, 20)
+compare_metrics_graph_vs_array_structure("Electrod1", data_pca, labels, 4, 18, 20)
 
 # import plotly.express as px
 #
