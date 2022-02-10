@@ -191,8 +191,8 @@ def compare_metrics_graph_vs_array_structure(Data, X, y, n_clusters, eps, pn=25)
           f"SBM_graph2={v_measure_score(y, sbm_graph2_labels):.3f}\t")
 
 
-try_metric(data_pca, labels, 4, 18, 20)
-compare_metrics_graph_vs_array_structure("Electrod1", data_pca, labels, 4, 18, 20)
+try_metric(data_pca, labels, 4, 18, 22)
+compare_metrics_graph_vs_array_structure("Electrod1", data_pca, labels, 4, 18, 22)
 
 # import plotly.express as px
 #

@@ -1,0 +1,67 @@
+Spike Sorted Dataset (SSD)
+Format version:
+1.3
+
+Number of units:
+4
+
+List with the names of units:
+U1
+U2
+U3
+U4
+
+List with the recording elements (channels, tetrodes, etc) where each unit originates:
+Raw
+Raw
+Raw
+Raw
+
+Number of spikes in each unit:
+5131
+2115
+1053
+1000
+
+Spike times and event sampling frequency [Hz]:
+30000.0
+
+Waveform internal sampling frequency [Hz] (can be different than the sampling of the spike times):
+30000.0
+
+Waveform length in samples:
+54
+
+Waveform spike align offset - the sample in waveform that is aligned to the spike (first spike in multitrodes):
+18
+
+Number of multitrode electrodes that were used for sorting (single electrodes = 1; tetrodes = 4; etc.):
+1
+
+Number of events (size of the list with event timestamps and list with event codes):
+2334
+
+File holding spike timestamps for the units; binary file containing the time in samples from the beginning of the experiment (spikes of each unit are stored continuously); 32 bit signed integer file:
+c28_npx.ssdst
+
+File holding spike amplitudes; binary file containing the amplitudes of spikes (matched 1:1 with the file holding spike timestamps); 32 bit IEEE 754-1985, single precision floating point file:
+c28_npx.ssdsa
+
+File holding spike widths; binary file containing the widths (in samples) of spikes (matched 1:1 with the file holding spike timestamps); 32 bit IEEE 754-1985, single precision floating point file:
+c28_npx.ssdsw
+
+File holding spike waveforms for the units; binary file containing the waveforms for all the units (waveforms for each unit are stored continuously); matched WaveformSampleNr:1 with the file holding spike timestamps; 32 bit IEEE 754-1985 file:
+c28_npx.ssduw
+
+File holding unit statistics (average spike waveforms, spike widths); binary file with average & SD waveforms stored one after another for each unit, followed by the other statistics (spike width, etc); 32 bit IEEE 754-1985 file:
+c28_npx.ssdus
+
+File holding event timestamps; timestamp is in samples; (32 bit signed integer file):
+c28_npx.ssdet
+
+File holding codes of events corresponding to the event timestamps file; timestamp is in samples; (32 bit signed integer file):
+c28_npx.ssdec
+
+Original recording length (in samples of spike times):
+24301030
+

@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e6da7892-7b8d-4a41-883c-f48992dba645" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/SBM-code/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/SBM-code/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SBM-code/functions/check_realdata_ssd_multitrode.py" beforeDir="false" afterPath="$PROJECT_DIR$/SBM-code/functions/check_realdata_ssd_multitrode.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -12,6 +12,9 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
   <component name="ProjectId" id="21zwKdXSGYCRInwsXM7oLv8tOCV" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -20,6 +23,9 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -29,7 +35,11 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1638957161587</updated>
+      <workItem from="1644483591611" duration="128000" />
     </task>
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
   </component>
 </project>

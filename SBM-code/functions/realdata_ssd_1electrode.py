@@ -34,7 +34,7 @@ def parse_ssd_file(dir_name):
             return spikes_per_unit.astype('int'), unit_electrode.astype('int')
 
 
-def plot_spikes_on_unit(waveforms_by_unit, unit, show=False):
+def plot_spikes_on_unit(waveforms_by_unit, unit, WAVEFORM_LENGTH=WAVEFORM_LENGTH, show=False):
     waveforms_on_unit = get_data_from_unit(waveforms_by_unit, unit, WAVEFORM_LENGTH)
     plt.figure()
     plt.title(f"Spikes ({len(waveforms_on_unit)}) on unit {unit}")
