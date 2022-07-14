@@ -54,25 +54,37 @@ def sbm_times():
 
 
 def run_sbm_graph():
-    # data, y = ds.load_real_data()
-    data, y = ds.load_synthetic_data(3)
-    pn = 25
+    # # data, y = ds.load_real_data()
+    # data, y = ds.load_synthetic_data(3)
+    # pn = 25
+    #
+    # labels1 = SBM_graph.SBM(data, pn, ccThreshold=5, adaptivePN=True)
+    # # labels2 = SBM_graph.SBM(data, pn, ccThreshold=5, version=2, adaptivePN=True)
+    # sp.plot('GT' + str(len(data)), data, y, marker='o')
+    # sp.plot_grid('SBM1-' + str(len(data)), data, pn, labels1, marker='o', adaptivePN=True)
+    # # sp.plot_grid('SBM2-' + str(len(data)), data, pn, labels2, marker='o', adaptivePN=True)
 
-    labels1 = SBM_graph.SBM(data, pn, ccThreshold=5, adaptivePN=True)
-    # labels2 = SBM_graph.SBM(data, pn, ccThreshold=5, version=2, adaptivePN=True)
-    sp.plot('GT' + str(len(data)), data, y, marker='o')
-    sp.plot_grid('SBM1-' + str(len(data)), data, pn, labels1, marker='o', adaptivePN=True)
-    # sp.plot_grid('SBM2-' + str(len(data)), data, pn, labels2, marker='o', adaptivePN=True)
+    # # X, y = sds.get_dataset_simulation_pca_2d(22)
+    # data, y = sds.get_dataset_simulation(22, 79, True)
+    # pca_2d = PCA(n_components=2)
+    # data = pca_2d.fit_transform(data)
+    # pn = 46
+    #
+    # labels = SBM_graph.SBM(data, pn, ccThreshold=5, adaptivePN=True)
+    # sp.plot('GT' + str(len(data)), data, y, marker='o')
+    # sp.plot_grid('SBM-' + str(len(data)), data, pn, labels, marker='o', adaptivePN=True)
 
-    # X, y = sds.get_dataset_simulation_pca_2d(22)
-    data, y = sds.get_dataset_simulation(22, 79, True)
-    pca_2d = PCA(n_components=2)
-    data = pca_2d.fit_transform(data)
-    pn = 46
 
+    data, y = sds.get_dataset_simulation_pca_2d(4)
+    pn = 10
     labels = SBM_graph.SBM(data, pn, ccThreshold=5, adaptivePN=True)
     sp.plot('GT' + str(len(data)), data, y, marker='o')
-    sp.plot_grid('SBM-' + str(len(data)), data, pn, labels, marker='o', adaptivePN=True)
+    sp.plot_grid('ISBM(PN=10) on Sim4', data, pn, labels, marker='o', adaptivePN=True)
+
+    pn = 25
+    labels = SBM_graph.SBM(data, pn, ccThreshold=5, adaptivePN=True)
+    sp.plot('GT' + str(len(data)), data, y, marker='o')
+    sp.plot_grid('ISBM(PN=25) on Sim4', data, pn, labels, marker='o', adaptivePN=True)
 
     plt.show()
 
@@ -132,18 +144,18 @@ def run_real_data():
         X = pca_2d.fit_transform(data)
         km_labels = labels[i-1]
 
-        sp.plot('Synthetic dataset (Sim1) ground truth', X, km_labels, marker='o', alpha=0.5)
+        sp.plot('Synthetic dataset (Sim1) ground truth', X, km_labels, marker='o')
 
         sbm_graph_labels = SBM_graph.SBM(X, pn, ccThreshold=5, adaptivePN=True)
-        sp.plot_grid('SBM graph2', X, pn, sbm_graph_labels, marker='o', adaptivePN=True)
+        sp.plot_grid(f'ISBM on Channel {i}', X, pn, sbm_graph_labels, marker='o', adaptivePN=True)
 
     plt.show()
 
 
 if __name__ == '__main__':
     # run_sbm()
-    run_sbm_graph()
+    # run_sbm_graph()
     # sbm_times()
-    # run_real_data()
+    run_real_data()
     # article_chunkify_presentation()
 

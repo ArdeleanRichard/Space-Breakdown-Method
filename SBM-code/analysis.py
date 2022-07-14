@@ -13,6 +13,7 @@ from functions import SBM_graph
 import functions.dataset as ds
 import functions.simulations_dataset as sds
 import functions.scatter_plot as sp
+from functions.scores import purity_score
 from metric import ss_metric, ss_metric_unweighted, ss_metric_unweighted2, ss_metric_trial2, ss_metric_trial1
 
 
@@ -80,21 +81,14 @@ def try_metric(X, y, n_clusters, eps, pn=25, no_noise=True):
     # print()
 
 
-def purity_score(y_true, y_pred):
-    # compute contingency matrix (also called confusion matrix)
-    contingency_mat = contingency_matrix(y_true, y_pred)
-    # return purity
-    return np.sum(np.amax(contingency_mat, axis=0)) / np.sum(contingency_mat)
-
-
 def compare_result_graph_vs_array_structure(Title, X, y, n_clusters, eps, pn=25):
     sp.plot(f'Synthetic dataset ({Title})  ground truth', X, y, marker='o')
 
-    # kmeans = KMeans(n_clusters=n_clusters, random_state=0).fit(X)
-    # sp.plot(f'KMeans on {Title}', X, kmeans.labels_, marker='o')
-    #
-    # dbscan = DBSCAN(eps=eps, min_samples=np.log(len(X))).fit(X)
-    # sp.plot(f'DBSCAN on {Title}', X, dbscan.labels_, marker='o')
+    kmeans = KMeans(n_clusters=n_clusters, random_state=0).fit(X)
+    sp.plot(f'KMeans on {Title}', X, kmeans.labels_, marker='o')
+
+    dbscan = DBSCAN(eps=eps, min_samples=np.log(len(X))).fit(X)
+    sp.plot(f'DBSCAN on {Title}', X, dbscan.labels_, marker='o')
     #
     # # af = AffinityPropagation(random_state=5).fit(X)
     # # sp.plot(f'AffinityPropagation on {Title}', X, af.labels_, marker='o')
@@ -112,7 +106,7 @@ def compare_result_graph_vs_array_structure(Title, X, y, n_clusters, eps, pn=25)
     sp.plot(f'FCM on {Title}', X, labels, marker='o')
 
 
-    sbm_array_labels = SBM.best(X, pn, ccThreshold=5)
+    sbm_array_labels = SBM.best(X, 40, ccThreshold=5)
     sp.plot_grid(f'SBM on {Title}', X, pn, sbm_array_labels, marker='o')
     #
     sbm_graph_labels = SBM_graph.SBM(X, pn, ccThreshold=5, adaptivePN=True)
@@ -121,9 +115,9 @@ def compare_result_graph_vs_array_structure(Title, X, y, n_clusters, eps, pn=25)
     plt.show()
 
 
-def compare_time_graph_vs_array_structure(X, y, n_clusters, eps, runs=25):
+def compare_time_graph_vs_array_structure(X, y, n_clusters, eps, pn = 10, runs=25):
     print(len(X))
-    pn = 25
+
 
     kmeans_time = 0
     dbscan_time = 0
@@ -143,9 +137,9 @@ def compare_time_graph_vs_array_structure(X, y, n_clusters, eps, runs=25):
         # dbscan = DBSCAN(eps=eps, min_samples=np.log(len(X))).fit(X)
         # dbscan_time += (time.time() - start)
 
-        # start = time.time()
-        # sbm_array_labels = SBM.sequential(X, pn, ccThreshold=5)
-        # sbm_array_time += (time.time() - start)
+        start = time.time()
+        sbm_array_labels = SBM.sequential(X, pn, ccThreshold=5)
+        sbm_array_time += (time.time() - start)
 
         # start = time.time()
         # sbm_graph_labels = SBM_graph.SBM(X, pn, ccThreshold=5)
@@ -284,7 +278,7 @@ def compare_time_dimensions(nr_dim=3, runs=25):
 
 
 def compare_time_samples():
-    for i in range(1, 15):
+    for i in range(6, 15):
         size = i * 250
         X, y = ds.generate_simulated_data(size)
         compare_time_graph_vs_array_structure(X, y, 6, 0.5, 100)
@@ -358,37 +352,36 @@ no_noise=False
 
 # X, y = ds.generate_simulated_data()
 # compare_result_graph_vs_array_structure('UO', X, y, 6, 0.5)
-# compare_time_graph_vs_array_structure(X, y, 6, 0.5, 100)
+# compare_time_graph_vs_array_structure(X, y, 6, 0.5, 25, runs=100)
 # compare_metrics_graph_vs_array_structure('UO', X, y, 6, 0.5, 25)
 
 # X, y = sds.get_dataset_simulation_pca_2d(4)
 # print(len(np.unique(y)))
 # compare_result_graph_vs_array_structure('Sim4', X, y, 5, 0.1, 25)
-# compare_time_graph_vs_array_structure(X, y, 5, 0.1, 100)
+# compare_time_graph_vs_array_structure(X, y, 5, 0.1, 25, runs=100)
 # compare_metrics_graph_vs_array_structure('Sim4', X, y, 5, 0.1, 25)
 
 # X, y = sds.get_dataset_simulation_pca_2d(1)
 # print(len(np.unique(y)))
 # compare_result_graph_vs_array_structure('Sim1', X, y, 17, 0.1, 46)
-# compare_time_graph_vs_array_structure(X, y, 17, 0.1, 100)
+# compare_time_graph_vs_array_structure(X, y, 17, 0.1, 46, runs=100)
 # compare_metrics_graph_vs_array_structure('Sim1', X, y, 17, 0.05, 46)
 
 # X, y = sds.get_dataset_simulation_pca_2d(22)
 # print(len(np.unique(y)))
 # compare_result_graph_vs_array_structure('Sim22', X, y, 7, 0.05, 46)
-# compare_time_graph_vs_array_structure(X, y, 7, 0.1, 100)
+# compare_time_graph_vs_array_structure(X, y, 7, 0.1, 46, runs=100)
 # compare_metrics_graph_vs_array_structure('Sim22', X, y, 7, 0.05, 46)
-
 
 # X, y = sds.get_dataset_simulation_pca_2d(21)
 # print(len(np.unique(y)))
 # compare_result_graph_vs_array_structure('Sim21', X, y, 5, 0.1, 20)
-# compare_time_graph_vs_array_structure(X, y, 5, 0.1, 100)
+# compare_time_graph_vs_array_structure(X, y, 5, 0.1, 20, runs=100)
 # compare_metrics_graph_vs_array_structure('Sim21', X, y, 5, 0.1, 20)
 
 # X, y = sds.get_dataset_simulation_pca_2d(30)
 # compare_result_graph_vs_array_structure('Sim30', X, y, 6, 0.1, 40)
-# compare_time_graph_vs_array_structure(X, y, 6, 0.5, 100)
+# compare_time_graph_vs_array_structure(X, y, 6, 0.5, 40, runs=100)
 # compare_metrics_graph_vs_array_structure('Sim30', X, y, 6, 0.1, 40)
 
 
@@ -396,11 +389,11 @@ no_noise=False
 #### OVERALL ANALYSIS ####
 # X, y = sds.get_dataset_simulation(4)
 # print(len(np.unique(y)))
-# compare_time_dimensions(2, 1)
-# compare_time_dimensions(3, 1)
-# compare_time_dimensions(4, 1)
-# compare_time_dimensions(5, 1)
-# compare_time_dimensions(6, 1)
+# compare_time_dimensions(2, 25)
+# compare_time_dimensions(3, 25)
+# compare_time_dimensions(4, 25)
+# compare_time_dimensions(5, 25)
+# compare_time_dimensions(6, 25)
 # compare_time_dimensions(7)
 # compare_time_dimensions(8)
 # compare_metrics_dimensions('Sim4 - 2d', 2, 5, 0.1, 10)

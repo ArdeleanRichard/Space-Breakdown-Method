@@ -4,7 +4,6 @@ from sklearn.cluster import KMeans, DBSCAN, MeanShift, AgglomerativeClustering, 
 from sklearn.decomposition import PCA
 from sklearn.metrics import adjusted_rand_score, adjusted_mutual_info_score, fowlkes_mallows_score, v_measure_score
 
-from analysis import purity_score
 from functions import SBM_graph, SBM
 from functions.realdata_ssd_multitrode import parse_ssd_file, split_multitrode, select_data, plot_multitrode, plot_multitrodes
 from functions.realdata_parsing import read_timestamps, read_waveforms, read_event_timestamps, read_event_codes
@@ -16,6 +15,7 @@ from functions.realdata_ssd import find_ssd_files, separate_by_unit, units_by_ch
 # DATASET_PATH = '../../data/M045_DRCT_0015_MT/'
 # DATASET_PATH = '../../data/M017_0004_MT/'
 # DATASET_PATH = '../../data/M017_MT/'
+from functions.scores import purity_score
 from metric import ss_metric
 
 # DATASET_PATH = '../../data/M017_0004_Tetrode/Units/'
@@ -120,7 +120,7 @@ sp.plot('K-Means on Electrode 1', data_pca, kmeans.labels_, marker='o')
 dbscan = DBSCAN(eps=18, min_samples=np.log(len(data_pca))).fit(data_pca)
 sp.plot('DBSCAN on Electrode 1', data_pca, dbscan.labels_, marker='o')
 sbm_graph2_labels = SBM_graph.SBM(data_pca, pn=20, ccThreshold=5, adaptivePN=True)
-sp.plot('SBM on Electrode 1', data_pca, sbm_graph2_labels, marker='o')
+sp.plot('ISBM on Electrode 1', data_pca, sbm_graph2_labels, marker='o')
 
 plt.show()
 
@@ -227,8 +227,8 @@ def compare_metrics_graph_vs_array_structure(Data, X, y, n_clusters, eps, pn=25)
           f"SBM_graph2={v_measure_score(y, sbm_graph2_labels):.3f}\t")
 
 
-try_metric(data_pca, labels, 4, 18, 22)
-compare_metrics_graph_vs_array_structure("Electrod1", data_pca, labels, 4, 18, 22)
+# try_metric(data_pca, labels, 4, 18, 22)
+# compare_metrics_graph_vs_array_structure("Electrod1", data_pca, labels, 4, 18, 22)
 
 # import plotly.express as px
 #
