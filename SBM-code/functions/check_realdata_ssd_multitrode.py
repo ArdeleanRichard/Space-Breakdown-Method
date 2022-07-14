@@ -1,5 +1,6 @@
 import numpy as np
-from sklearn.cluster import KMeans, DBSCAN
+from fcmeans import FCM
+from sklearn.cluster import KMeans, DBSCAN, MeanShift, AgglomerativeClustering, estimate_bandwidth
 from sklearn.decomposition import PCA
 from sklearn.metrics import adjusted_rand_score, adjusted_mutual_info_score, fowlkes_mallows_score, v_measure_score
 
@@ -134,11 +135,23 @@ def try_metric(X, y, n_clusters, eps, pn=25, no_noise=True):
 
     sbm_graph2_labels = SBM_graph.SBM(X, pn, ccThreshold=5, adaptivePN=True)
 
+    bandwidth = estimate_bandwidth(X, quantile=0.05, n_samples=500)
+    ms = MeanShift(bandwidth=bandwidth, bin_seeding=True).fit(X)
+
+    ward = AgglomerativeClustering(n_clusters=n_clusters, linkage="ward").fit(X)
+
+    my_model = FCM(n_clusters=n_clusters)
+    my_model.fit(X)
+    labels = my_model.predict(X)
+
     print(f"KMeans: {ss_metric(y, kmeans.labels_):.3f}")
     print(f"DBSCAN: {ss_metric(y, dbscan.labels_):.3f}")
-    # print(f"SBMog: {ss_metric(y, sbm_array_labels):.3f}")
-    # print(f"ISBM: {ss_metric(y, sbm_graph_labels):.3f}")
-    print(f"ISBM2: {ss_metric(y, sbm_graph2_labels):.3f}")
+    print(f"MS: {ss_metric(y, ms.labels_):.3f}")
+    print(f"AC: {ss_metric(y, ward.labels_):.3f}")
+    print(f"FCM: {ss_metric(y, labels):.3f}")
+    print(f"SBMog: {ss_metric(y, sbm_array_labels):.3f}")
+    print(f"ISBM: {ss_metric(y, sbm_graph_labels):.3f}")
+    print(f"ISBM: {ss_metric(y, sbm_graph2_labels):.3f}")
     # test_labels = np.array(list(range(0, len(y))))
     # print(f"Test: {ss_metric(y, test_labels):.3f}")
 
@@ -154,17 +167,31 @@ def compare_metrics_graph_vs_array_structure(Data, X, y, n_clusters, eps, pn=25)
     sbm_graph_labels = SBM_graph.SBM(X, pn, ccThreshold=5)
     sbm_graph2_labels = SBM_graph.SBM(X, pn, ccThreshold=5, adaptivePN=True)
 
-    #metric - ARI
+    bandwidth = estimate_bandwidth(X, quantile=0.07, n_samples=500)
+    ms = MeanShift(bandwidth=bandwidth, bin_seeding=True).fit(X)
+
+    ward = AgglomerativeClustering(n_clusters=n_clusters, linkage="ward").fit(X)
+
+    my_model = FCM(n_clusters=n_clusters)
+    my_model.fit(X)
+    labels = my_model.predict(X)
+
+    # metric - ARI
     print(f"{Data} - ARI: "
           f"KMeans={adjusted_rand_score(y, kmeans.labels_):.3f}\t"
           f"DBSCAN={adjusted_rand_score(y, dbscan.labels_):.3f}\t"
-          f"SBM_array={adjusted_rand_score(y, sbm_array_labels):.3f}\t"
+          f"MS={adjusted_rand_score(y, ms.labels_):.3f}\t"
+          f"Ag={adjusted_rand_score(y, ward.labels_):.3f}\t"
+          f"FCM={adjusted_rand_score(y, labels):.3f}\t"
           # f"SBM_graph={adjusted_rand_score(y, sbm_graph_labels):.3f}\t"
           f"SBM_graph2={adjusted_rand_score(y, sbm_graph2_labels):.3f}\t")
 
     print(f"{Data} - AMI: "
           f"KMeans={adjusted_mutual_info_score(y, kmeans.labels_):.3f}\t"
           f"DBSCAN={adjusted_mutual_info_score(y, dbscan.labels_):.3f}\t"
+          f"MS={adjusted_mutual_info_score(y, ms.labels_):.3f}\t"
+          f"Ag={adjusted_mutual_info_score(y, ward.labels_):.3f}\t"
+          f"FCM={adjusted_mutual_info_score(y, labels):.3f}\t"
           f"SBM_array={adjusted_mutual_info_score(y, sbm_array_labels):.3f}\t"
           # f"SBM_graph={adjusted_mutual_info_score(y, sbm_graph_labels):.3f}\t"
           f"SBM_graph2={adjusted_mutual_info_score(y, sbm_graph2_labels):.3f}\t")
@@ -172,6 +199,9 @@ def compare_metrics_graph_vs_array_structure(Data, X, y, n_clusters, eps, pn=25)
     print(f"{Data} - Purity: "
           f"KMeans={purity_score(y, kmeans.labels_):.3f}\t"
           f"DBSCAN={purity_score(y, dbscan.labels_):.3f}\t"
+          f"MS={purity_score(y, ms.labels_):.3f}\t"
+          f"Ag={purity_score(y, ward.labels_):.3f}\t"
+          f"FCM={purity_score(y, labels):.3f}\t"
           f"SBM_array={purity_score(y, sbm_array_labels):.3f}\t"
           # f"SBM_graph={purity_score(y, sbm_graph_labels):.3f}\t"
           f"SBM_graph2={purity_score(y, sbm_graph2_labels):.3f}\t")
@@ -179,6 +209,9 @@ def compare_metrics_graph_vs_array_structure(Data, X, y, n_clusters, eps, pn=25)
     print(f"{Data} - FMI: "
           f"KMeans={fowlkes_mallows_score(y, kmeans.labels_):.3f}\t"
           f"DBSCAN={fowlkes_mallows_score(y, dbscan.labels_):.3f}\t"
+          f"MS={fowlkes_mallows_score(y, ms.labels_):.3f}\t"
+          f"Ag={fowlkes_mallows_score(y, ward.labels_):.3f}\t"
+          f"FCM={fowlkes_mallows_score(y, labels):.3f}\t"
           f"SBM_array={fowlkes_mallows_score(y, sbm_array_labels):.3f}\t"
           # f"SBM_graph={fowlkes_mallows_score(y, sbm_graph_labels):.3f}\t"
           f"SBM_graph2={fowlkes_mallows_score(y, sbm_graph2_labels):.3f}\t")
@@ -186,6 +219,9 @@ def compare_metrics_graph_vs_array_structure(Data, X, y, n_clusters, eps, pn=25)
     print(f"{Data} - VM: "
           f"KMeans={v_measure_score(y, kmeans.labels_):.3f}\t"
           f"DBSCAN={v_measure_score(y, dbscan.labels_):.3f}\t"
+          f"MS={v_measure_score(y, ms.labels_):.3f}\t"
+          f"Ag={v_measure_score(y, ward.labels_):.3f}\t"
+          f"FCM={v_measure_score(y, labels):.3f}\t"
           f"SBM_array={v_measure_score(y, sbm_array_labels):.3f}\t"
           # f"SBM_graph={v_measure_score(y, sbm_graph_labels):.3f}\t"
           f"SBM_graph2={v_measure_score(y, sbm_graph2_labels):.3f}\t")

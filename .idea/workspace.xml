@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e6da7892-7b8d-4a41-883c-f48992dba645" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/SBM-code/functions/check_realdata_ssd_multitrode.py" beforeDir="false" afterPath="$PROJECT_DIR$/SBM-code/functions/check_realdata_ssd_multitrode.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SBM-code/analysis.py" beforeDir="false" afterPath="$PROJECT_DIR$/SBM-code/analysis.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,6 +37,7 @@
       <option name="presentableId" value="Default" />
       <updated>1638957161587</updated>
       <workItem from="1644483591611" duration="128000" />
+      <workItem from="1657700176089" duration="369000" />
     </task>
     <servers />
   </component>
