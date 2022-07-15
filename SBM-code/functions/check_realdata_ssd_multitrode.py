@@ -115,12 +115,22 @@ import matplotlib.pyplot as plt
 
 sp.plot("Ground truth of Electrode 1", data_pca, labels)
 
-kmeans = KMeans(n_clusters=4, random_state=0).fit(data_pca)
-sp.plot('K-Means on Electrode 1', data_pca, kmeans.labels_, marker='o')
-dbscan = DBSCAN(eps=18, min_samples=np.log(len(data_pca))).fit(data_pca)
-sp.plot('DBSCAN on Electrode 1', data_pca, dbscan.labels_, marker='o')
+# kmeans = KMeans(n_clusters=4, random_state=0).fit(data_pca)
+# sp.plot('K-Means on Electrode 1', data_pca, kmeans.labels_, marker='o')
+# dbscan = DBSCAN(eps=18, min_samples=np.log(len(data_pca))).fit(data_pca)
+# sp.plot('DBSCAN on Electrode 1', data_pca, dbscan.labels_, marker='o')
 sbm_graph2_labels = SBM_graph.SBM(data_pca, pn=20, ccThreshold=5, adaptivePN=True)
 sp.plot('ISBM on Electrode 1', data_pca, sbm_graph2_labels, marker='o')
+
+# bandwidth = estimate_bandwidth(data_pca, quantile=0.05, n_samples=500)
+# ms = MeanShift(bandwidth=bandwidth, bin_seeding=True).fit(data_pca)
+# sp.plot('MeanShift on Electrode 1', data_pca, ms.labels_, marker='o')
+# ward = AgglomerativeClustering(n_clusters=4, linkage="ward").fit(data_pca)
+# sp.plot('AgglomerativeClustering on Electrode 1', data_pca, ward.labels_, marker='o')
+# my_model = FCM(n_clusters=4)
+# my_model.fit(data_pca)
+# labels = my_model.predict(data_pca)
+# sp.plot('FCM on Electrode 1', data_pca, labels, marker='o')
 
 plt.show()
 
