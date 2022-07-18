@@ -154,8 +154,8 @@ def run_real_data():
 
 if __name__ == '__main__':
     # run_sbm()
-    # run_sbm_graph()
+    run_sbm_graph()
     # sbm_times()
-    run_real_data()
+    # run_real_data()
     # article_chunkify_presentation()
 
