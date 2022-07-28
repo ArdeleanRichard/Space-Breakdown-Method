@@ -114,6 +114,7 @@ def article_chunkify_presentation():
     sp.plot_grid('50 generated points - chunkification', Xm, pn=5, labels=y, marker='o')
 
 
+
     from functions import SBM_functions as fs
     Xm = np.floor(Xm).astype(int)
     Xm[Xm==pn]=pn-1
@@ -121,16 +122,16 @@ def article_chunkify_presentation():
     ndArray = fs.chunkify_numpy(Xm, pn)
     ndArray = fs.rotateMatrix(ndArray)
     print(ndArray)
-
-    import networkx as nx
-    graph = SBM_graph.create_graph(Xm)
-    plt.figure()
-    counts = {}
-    for node in list(graph.nodes):
-        counts[node] = graph.nodes[node]['count']
-
-    nx.draw(graph, labels=counts, with_labels=True)
-    plt.show()
+    #
+    # import networkx as nx
+    # graph = SBM_graph.create_graph(Xm)
+    # plt.figure()
+    # counts = {}
+    # for node in list(graph.nodes):
+    #     counts[node] = graph.nodes[node]['count']
+    #
+    # nx.draw(graph, labels=counts, with_labels=True)
+    # plt.show()
 
 
 def run_real_data():
@@ -154,8 +155,8 @@ def run_real_data():
 
 if __name__ == '__main__':
     # run_sbm()
-    run_sbm_graph()
+    # run_sbm_graph()
     # sbm_times()
     # run_real_data()
-    # article_chunkify_presentation()
+    article_chunkify_presentation()
 

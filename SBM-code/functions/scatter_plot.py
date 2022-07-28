@@ -83,3 +83,5 @@ def plot_grid(title, X, pn, labels=None, plot=True, marker='o', adaptivePN=False
             # ax.set_yticks(np.arange(0, pn, 1))
             ax.scatter(X[:, 0], X[:, 1], X[:, 2], marker=marker, c=label_color, s=25)
             # plt.grid(True)
+
+        # fig.savefig("cevajeg.svg", format='svg', dpi=1200)
