@@ -145,7 +145,7 @@ def run_real_data():
         X = pca_2d.fit_transform(data)
         km_labels = labels[i-1]
 
-        sp.plot('Synthetic dataset (Sim1) ground truth', X, km_labels, marker='o')
+        sp.plot('Ground truth', X, km_labels, marker='o')
 
         sbm_graph_labels = SBM_graph.SBM(X, pn, ccThreshold=5, adaptivePN=True)
         sp.plot_grid(f'ISBM on Channel {i}', X, pn, sbm_graph_labels, marker='o', adaptivePN=True)
@@ -157,6 +157,6 @@ if __name__ == '__main__':
     # run_sbm()
     # run_sbm_graph()
     # sbm_times()
-    # run_real_data()
-    article_chunkify_presentation()
+    run_real_data()
+    # article_chunkify_presentation()
 
