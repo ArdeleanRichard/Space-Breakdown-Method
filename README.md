@@ -52,14 +52,15 @@ E. Ardelean, A. Stanciu, M. Dinsoreanu, R. Potolea, C. Lemnaru and V. V. Moca, "
 ```
 
 # Improved Space Breakdown Method
+The Improved Space Breakdown Method has been published in Frontiers in Computational Neuroscience: 
+https://www.frontiersin.org/articles/10.3389/fncom.2023.1019637/full
+
 The algorithm has been improved since its publishing by modifying the underlying data structure from an ndarray to a graph. The following image show the improvement of a simple example from 25 cells in the ndarray to only 22 nodes in the graph.
 ![SBM structures](/images/sbm_structs.PNG?raw=true)
 
 Another improvement, added later to the algorithm is an adaptive Partitioning Number, influenced by the variance of each feature. This shall improve the complexity of the algorithm a bit and will allow the use of the algorithm on datasets of higher dimensions.
 ![Improvement](/images/sbm_improved.png?raw=true)
 
-The Improved Space Breakdown Method has been published in Frontiers in Computational Neuroscience: 
-https://www.frontiersin.org/articles/10.3389/fncom.2023.1019637/full
 
 
 ## Citation
