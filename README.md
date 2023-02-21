@@ -1,6 +1,7 @@
 # Space Breakdown Method
 Space Breakdown Method (SBM) is a clustering algorithm that can be used to cluster low-dimensional neural data with efficiency, due to its linear complexity scaling with the data size.
 SBM has been published by IEEE in September 2019:
+- https://ieeexplore.ieee.org/document/8959795
 - DOI: 10.1109/ICCP48234.2019.8959795
 - Conference: 2019 IEEE 15th International Conference on Intelligent Computer Communication and Processing (ICCP)
 
@@ -56,6 +57,17 @@ The algorithm has been improved since its publishing by modifying the underlying
 
 Another improvement, added later to the algorithm is an adaptive Partitioning Number, influenced by the variance of each feature. This shall improve the complexity of the algorithm a bit and will allow the use of the algorithm on datasets of higher dimensions.
 ![Improvement](/images/sbm_improved.png?raw=true)
+
+The Improved Space Breakdown Method has been published in Frontiers in Computational Neuroscience: 
+https://www.frontiersin.org/articles/10.3389/fncom.2023.1019637/full
+
+
+## Citation
+
+- For Plain Text:
+```
+E.-R. Ardelean, A.-M. Ichim, M. Dînşoreanu, and R. C. Mureşan, “Improved space breakdown method – A robust clustering technique for spike sorting,” Frontiers in Computational Neuroscience, vol. 17, 2023
+```
 
 # Contact
 If you have any questions about SBM, feel free to contact me. (Email: ardeleaneugenrichard@gmail.com)
