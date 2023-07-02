@@ -185,7 +185,8 @@ def expand_cluster_center(graph, center, label, cluster_centers):
             #location = neighbour.tostring()
 
             if graph.nodes[neighbour]['visited'] == 0:
-                if graph.nodes[neighbour]['count'] <= graph.nodes[current]['count']:
+                number = math.floor(math.sqrt(dropoff * euclidean_point_distance(np.fromstring(center, dtype=int), np.fromstring(neighbour, dtype=int))))
+                if number <= graph.nodes[neighbour]['count'] <= graph.nodes[current]['count']:
                     graph.nodes[neighbour]['visited'] = 1
 
                     if graph.nodes[neighbour]['label'] == label:
