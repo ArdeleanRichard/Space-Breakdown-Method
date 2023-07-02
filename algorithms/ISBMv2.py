@@ -186,8 +186,7 @@ def expand_cluster_center(graph, center, label, cluster_centers):
         for neighbour in neighbours:
 
             if graph.nodes[neighbour]['visited'] == 0:
-                number = math.floor(math.sqrt(dropoff * euclidean_point_distance(np.fromstring(center, dtype=int), np.fromstring(neighbour, dtype=int))))
-                if number <= graph.nodes[neighbour]['count'] <= graph.nodes[current]['count']:
+                if graph.nodes[neighbour]['count'] <= graph.nodes[current]['count']:
                     graph.nodes[neighbour]['visited'] = 1
 
                     if graph.nodes[neighbour]['label'] == label:
@@ -227,11 +226,6 @@ def expand_cluster_center(graph, center, label, cluster_centers):
                             expansionQueue.append(neighbour)
 
 
-def get_strength(graph, clusterCenter, questionPoint):
-    dist = euclidean_point_distance(np.fromstring(questionPoint, dtype=int), np.fromstring(clusterCenter, dtype=int))
-    strength = graph.nodes[questionPoint]['count'] / dist / graph.nodes[clusterCenter]['count']
-    return strength
-
 def disambiguate(graph, questionPoint, current_cluster, old_cluster):
     if (current_cluster == questionPoint) or (old_cluster == questionPoint):
         if graph.nodes[current_cluster]['count'] > graph.nodes[old_cluster]['count']:
@@ -247,8 +241,11 @@ def disambiguate(graph, questionPoint, current_cluster, old_cluster):
     if graph.nodes[current_cluster]['count'] == graph.nodes[questionPoint]['count']:
         return 22
 
-    c1Strength = get_strength(graph, current_cluster, questionPoint)
-    c2Strength = get_strength(graph, old_cluster, questionPoint)
+    distanceToC1 = euclidean_point_distance(np.fromstring(questionPoint, dtype=int), np.fromstring(current_cluster, dtype=int))
+    distanceToC2 = euclidean_point_distance(np.fromstring(questionPoint, dtype=int), np.fromstring(old_cluster, dtype=int))
+
+    c1Strength = graph.nodes[current_cluster]['count'] / get_dropoff(graph, current_cluster) - distanceToC1
+    c2Strength = graph.nodes[old_cluster]['count'] / get_dropoff(graph, old_cluster) - distanceToC2
 
     if c1Strength > c2Strength:
         return 1
