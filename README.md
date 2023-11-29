@@ -17,7 +17,7 @@ SBM results in comparison with K-Means and DBSCAN:
 
 ## Git repository structure
 The code folder structure:
-- run.py : main file to run the code from
+- main.py : main file to run the code from
 - requirements.txt : python libraries that are needed in order to run the code
 - images: images that will be used for this readme
 - algorithms : folder that contains the actual SBM and ISBM code
@@ -30,8 +30,23 @@ The 'requirements.txt' file indicates the dependencies required for running the 
 The paths to the data folder on your local workstation need to be set from the 'constants.py' file (DATA_FOLDER_PATH, SIM_DATA_FOLDER_PATH, REAL_DATA_FOLDER_PATH).
 
 
-## Citation
-We would appreciate it if you cite the paper when you use this work:
+# Improved Space Breakdown Method
+The Improved Space Breakdown Method has been published in Frontiers in Computational Neuroscience: 
+https://www.frontiersin.org/articles/10.3389/fncom.2023.1019637/full
+
+The algorithm has been improved since its publishing by modifying the underlying data structure from an ndarray to a graph. The following image show the improvement of a simple example from 25 cells in the ndarray to only 22 nodes in the graph.
+![SBM structures](/images/isbm_struct.PNG?raw=true)
+
+Another improvement, added later to the algorithm is an adaptive Partitioning Number, influenced by the variance of each feature. This shall improve the complexity of the algorithm a bit and will allow the use of the algorithm on datasets of higher dimensions.
+![Improvement](/images/isbm.png?raw=true)
+
+
+# Time-Frequency Breakdown Method
+
+
+# Citations
+## SBM
+We would appreciate it, if you cite the paper when you use this work for the original SBM algorithm:
 
 - For Plain Text:
 ```
@@ -50,24 +65,38 @@ E. Ardelean, A. Stanciu, M. Dinsoreanu, R. Potolea, C. Lemnaru and V. V. Moca, "
   pages={419-425},
   doi={10.1109/ICCP48234.2019.8959795}}
 ```
-
-# Improved Space Breakdown Method
-The Improved Space Breakdown Method has been published in Frontiers in Computational Neuroscience: 
-https://www.frontiersin.org/articles/10.3389/fncom.2023.1019637/full
-
-The algorithm has been improved since its publishing by modifying the underlying data structure from an ndarray to a graph. The following image show the improvement of a simple example from 25 cells in the ndarray to only 22 nodes in the graph.
-![SBM structures](/images/sbm_structs.PNG?raw=true)
-
-Another improvement, added later to the algorithm is an adaptive Partitioning Number, influenced by the variance of each feature. This shall improve the complexity of the algorithm a bit and will allow the use of the algorithm on datasets of higher dimensions.
-![Improvement](/images/sbm_improved.png?raw=true)
-
-
-
-## Citation
+## ISBM
+We would appreciate it, if you cite the paper when you use this work for the ISBM (improved SBM) algorithm:
 
 - For Plain Text:
 ```
 E.-R. Ardelean, A.-M. Ichim, M. Dînşoreanu, and R. C. Mureşan, “Improved space breakdown method – A robust clustering technique for spike sorting,” Frontiers in Computational Neuroscience, vol. 17, 2023
+```
+
+- BibTex:
+```
+@ARTICLE{10.3389/fncom.2023.1019637,
+AUTHOR={Ardelean, Eugen-Richard and Ichim, Ana-Maria and Dînşoreanu, Mihaela and Mureşan, Raul Cristian},   
+TITLE={Improved space breakdown method – A robust clustering technique for spike sorting},      
+JOURNAL={Frontiers in Computational Neuroscience},      
+VOLUME={17},           
+YEAR={2023},      
+URL={https://www.frontiersin.org/articles/10.3389/fncom.2023.1019637},       
+DOI={10.3389/fncom.2023.1019637}      
+}
+```
+
+## TFBM
+We would appreciate it, if you cite the paper when you use this work for the TFBM algorithm:
+
+- For Plain Text:
+```
+
+```
+
+- BibTex:
+```
+
 ```
 
 # Contact
