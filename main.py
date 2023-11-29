@@ -34,7 +34,6 @@ def run_ISBM_graph_on_simulated_data():
     plt.show()
 
 
-
 def run_ISBM_graph_on_real_data():
     units_in_channel, labels = ds.get_tins_data()
 
@@ -60,6 +59,7 @@ def run_ISBM_graph_on_real_data():
         plot_spikes_by_clusters(data,  km.labels_)
 
     plt.show()
+
 
 def run_ISBM_graph_on_real_data_tetrode():
     DATASET_PATH = '../DATA/TINS/M017_Tetrode/ssd/'
@@ -202,10 +202,84 @@ def check_performances_against_scs(pn):
     print()
 
 
+def plot_data_result_mask(method_name, data, labelsMatrix, center_coords):
+    fig= plt.figure(figsize=(24, 6))
+    fig.suptitle(method_name, fontsize=16)
+    ax = fig.add_subplot(1, 3, 1)
+
+    ax.set_title("Initial Data")
+    im = ax.imshow(data, aspect='auto', cmap='jet', interpolation='none')
+    ax.invert_yaxis()
+    plt.colorbar(im)
+
+    ax = fig.add_subplot(1, 3, 2)
+    ax.set_title("Mask")
+    im = ax.imshow(labelsMatrix, aspect='auto', cmap='jet', interpolation='none')
+    ax.invert_yaxis()
+    plt.colorbar(im)
+
+    for center_coord in center_coords:
+        plt.scatter(center_coord[1], center_coord[0], s=1, c='black', marker='o')
+        # if cc['parent'] == -1:
+        #     plt.scatter(coords[1], coords[0], s=1, c='white', marker='o')
+
+    masked = apply_mask(data, labelsMatrix)
+
+    # test = np.zeros_like(data)
+    # for cc in cc_info:
+    #     contour_points = cc['contour']
+    #     for contour_point in contour_points:
+    #             test[contour_point[0], contour_point[1]] = 1
+
+    ax = fig.add_subplot(1, 3, 3)
+    ax.set_title("Segmentation")
+    im = ax.imshow(masked, aspect='auto', cmap='jet', interpolation='none')
+    plt.colorbar(im)
+    # im = ax.imshow(test, aspect='auto', cmap='bone_r', interpolation='none', alpha=test)
+    ax.invert_yaxis()
+
+
+    plt.show()
+
+
+def TFBM_and_plot(data):
+    tfbm = TFBM(data.T, threshold="auto", merge=True, aspect_ratio=1, merge_factor=15)
+    tfbm.fit(verbose=True, timer=True)
+
+    center_coords = [(pi.center_coords[1], pi.center_coords[0]) for pi in tfbm.packet_infos]
+
+    plot_data_result_mask("TFBM", data, tfbm.merged_labels_data.T, center_coords)
+
+
+def load_atoms_synthetic_data():
+    data_folder = "./DATA/toy/"
+    file = "atoms-2.csv"
+
+    f = open(data_folder+file, "r")
+    intro = f.readlines()[:5]
+    f.close()
+
+    timeValues = []
+    for str_time in intro[1].split(","):
+        timeValues.append(float(str_time))
+
+    frequencyValues = []
+    for str_time in intro[3].split(","):
+        frequencyValues.append(float(str_time))
+
+    data = np.loadtxt(data_folder + file, delimiter=",", dtype=float, skiprows=5)
+
+    spectrumData = Spectrum2D(timeValues=np.array(timeValues), frequencyValues=frequencyValues, powerValues=data)
+
+    return data, spectrumData
+
+
 if __name__ == '__main__':
-    # run_ISBM_graph_on_simulated_data()
+    run_ISBM_graph_on_simulated_data()
     # run_ISBM_graph_on_real_data()
     # run_ISBM_graph_on_real_data_tetrode()
-    check_performances_against_scs(pn=10)
-    check_performances_against_scs(pn=25)
+    # check_performances_against_scs(pn=10)
+    # check_performances_against_scs(pn=25)
 
+    # data, spectrumData = load_atoms_synthetic_data()
+    # TFBM_and_plot(data)

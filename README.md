@@ -43,6 +43,7 @@ Another improvement, added later to the algorithm is an adaptive Partitioning Nu
 
 # Time-Frequency Breakdown Method
 
+![TFBM](/images/tfbm.PNG?raw=true)
 
 # Citations
 ## SBM
