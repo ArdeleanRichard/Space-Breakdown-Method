@@ -42,6 +42,7 @@ Another improvement, added later to the algorithm is an adaptive Partitioning Nu
 
 
 # Time-Frequency Breakdown Method
+TFBM is a method, based on SBM, developed for the detection of brain oscillations in time-frequency representations (such as spectrograms obtained from the Fourier Transform).
 
 ![TFBM](/images/tfbm.PNG?raw=true)
 

@@ -1,10 +1,38 @@
 import matplotlib.pyplot as plt
 import numpy as np
 from mpl_toolkits.mplot3d import Axes3D
+from sklearn import preprocessing
 
 from visualization import label_map as cs
 
-from algorithms.ISBM import data_preprocessing
+def data_preprocessing(spikes, pn, adaptivePN=False):
+    """
+    (1) Data Normalization - First Step of ISBM
+    Min-Max scaling of the input, returning values within the [0, PN] interval
+    :param X: matrix - the points of the dataset
+    :param pn: int - the partioning number parameter
+    :param adaptivePN: boolean - activation of the second improvement of ISBM with relation to the number of partitioning number per dimension
+
+    :returns X_std: matrix - scaled dataset
+
+    X_std = (X - X.min(axis=0)) / (X.max(axis=0) - X.min(axis=0))
+    X_scaled = X_std * (max - min) + min
+    """
+    if adaptivePN == True:
+        spikes = preprocessing.MinMaxScaler((0, 1)).fit_transform(spikes)
+        feature_variance = np.var(spikes, axis=0)
+
+        feature_variance = feature_variance / np.amax(feature_variance)
+        feature_variance = feature_variance * pn
+
+        spikes = spikes * np.array(feature_variance)
+
+        return spikes, feature_variance
+
+    spikes = preprocessing.MinMaxScaler((0, pn)).fit_transform(spikes)
+
+
+    return spikes, pn
 
 
 def plot(title, X, labels=None, plot=True, marker='o', alpha=1):

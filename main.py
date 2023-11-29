@@ -4,6 +4,9 @@ from sklearn.cluster import KMeans, estimate_bandwidth, MeanShift, Agglomerative
 from sklearn.metrics import adjusted_rand_score, adjusted_mutual_info_score, fowlkes_mallows_score, v_measure_score
 
 import dataset_parsing.read_tins_m_data as ds
+from algorithms.TFBM import TFBM
+from common.image_proc import apply_mask
+from common.structs import Spectrum2D
 from validation.scores import purity_score
 from validation.scs_metric import scs_metric
 from visualization import scatter_plot as sp
@@ -12,29 +15,48 @@ import dataset_parsing.simulations_dataset as sds
 import numpy as np
 from sklearn.decomposition import PCA
 
-from algorithms import SBM, ISBM
+from algorithms.SBM import SBM
+from algorithms.ISBM import ISBM
 from dataset_parsing.realdata_ssd_multitrode import parse_ssd_file, split_multitrode, plot_multitrode
 from dataset_parsing.realdata_parsing import read_timestamps, read_waveforms, read_event_timestamps, read_event_codes
 from dataset_parsing.realdata_ssd import find_ssd_files, separate_by_unit, units_by_channel
 from visualization.scatter_plot_additionals import plot_spikes_by_clusters
 
 
-def run_ISBM_graph_on_simulated_data():
+def run_SBM_on_simulated_data():
     data, y = sds.get_dataset_simulation_pca_2d(4)
     pn = 10
-    labels = ISBM.run(data, pn, ccThreshold=5, adaptivePN=True)
+    sbm = SBM(data, pn, threshold=5)
+    sbm.fit()
     sp.plot('GT' + str(len(data)), data, y, marker='o')
-    sp.plot_grid('ISBM(PN=10) on Sim4', data, pn, labels, marker='o', adaptivePN=True)
+    sp.plot_grid('SBM(PN=10) on Sim4', data, pn, sbm.labels, marker='o', adaptivePN=False)
 
     pn = 25
-    labels = ISBM.run(data, pn, ccThreshold=5, adaptivePN=True)
+    sbm = SBM(data, pn, threshold=5)
+    sbm.fit()
     sp.plot('GT' + str(len(data)), data, y, marker='o')
-    sp.plot_grid('ISBM(PN=25) on Sim4', data, pn, labels, marker='o', adaptivePN=True)
+    sp.plot_grid('SBM(PN=25) on Sim4', data, pn, sbm.labels, marker='o', adaptivePN=False)
+
+    plt.show()
+
+def run_ISBM_on_simulated_data():
+    data, y = sds.get_dataset_simulation_pca_2d(4)
+    pn = 10
+    isbm = ISBM(data, pn, threshold=5, adaptive=True)
+    isbm.fit()
+    sp.plot('GT' + str(len(data)), data, y, marker='o')
+    sp.plot_grid('ISBM(PN=10) on Sim4', data, pn, isbm.labels, marker='o', adaptivePN=True)
+
+    pn = 25
+    isbm = ISBM(data, pn, threshold=5, adaptive=True)
+    isbm.fit()
+    sp.plot('GT' + str(len(data)), data, y, marker='o')
+    sp.plot_grid('ISBM(PN=25) on Sim4', data, pn, isbm.labels, marker='o', adaptivePN=True)
 
     plt.show()
 
 
-def run_ISBM_graph_on_real_data():
+def run_ISBM_on_real_data():
     units_in_channel, labels = ds.get_tins_data()
 
     # for (i, pn) in list([(4, 25), (6, 40), (17, 15), (26, 30)]):
@@ -48,10 +70,11 @@ def run_ISBM_graph_on_real_data():
 
         sp.plot('Ground truth', X, km_labels, marker='o')
 
-        sbm_graph_labels = ISBM.run(X, pn, ccThreshold=5, adaptivePN=True)
-        sp.plot_grid(f'ISBM on Channel {i}', X, pn, sbm_graph_labels, marker='o', adaptivePN=True)
+        isbm = ISBM(data, pn, threshold=5, adaptive=True)
+        isbm.fit()
+        sp.plot_grid(f'ISBM on Channel {i}', X, pn, isbm.labels, marker='o', adaptivePN=True)
 
-        plot_spikes_by_clusters(data, sbm_graph_labels)
+        plot_spikes_by_clusters(data, isbm.labels)
 
         km = KMeans(n_clusters=5).fit(X)
         sp.plot(f'K-means on Channel {i}', X, km.labels_, marker='o')
@@ -61,7 +84,7 @@ def run_ISBM_graph_on_real_data():
     plt.show()
 
 
-def run_ISBM_graph_on_real_data_tetrode():
+def run_ISBM_on_real_data_tetrode():
     DATASET_PATH = '../DATA/TINS/M017_Tetrode/ssd/'
 
     spikes_per_unit, unit_multitrode, _ = parse_ssd_file(DATASET_PATH)
@@ -101,9 +124,9 @@ def run_ISBM_graph_on_real_data_tetrode():
     pca_ = PCA(n_components=8)
     pca_data = pca_.fit_transform(multitrode)
 
-
-    sbm_graph_labels = ISBM.run(pca_data, pn=20, ccThreshold=5, adaptivePN=True)
-    sp.plot(f'ISBM on Tetrode (8 dimensions)', pca_vis, sbm_graph_labels, marker='o', alpha=0.5)
+    isbm = ISBM(pca_data, 25, threshold=5, adaptive=True)
+    isbm.fit()
+    sp.plot(f'ISBM on Tetrode (8 dimensions)', pca_vis, isbm.labels, marker='o', alpha=0.5)
     plt.show()
 
 
@@ -134,14 +157,16 @@ def check_performances_against_scs(pn):
     labels = my_model.predict(X)
     sp.plot(f'FCM on {Title}', X, labels, marker='o', alpha=0.5)
 
-    sbm_array_labels = SBM.best(X, pn, ccThreshold=5)
+    sbm = SBM(X, pn, threshold=5)
+    sbm.fit()
 
     # sp.plot_grid(f'SBM on {Title}', X, pn, sbm_array_labels, marker='o')
-    sp.plot(f'SBM on {Title}', X, sbm_array_labels, marker='o', alpha=0.5)
+    sp.plot(f'SBM on {Title}', X, sbm.labels, marker='o', alpha=0.5)
 
-    sbm_graph_labels = ISBM.run(X, pn, ccThreshold=5, adaptivePN=True)
+    isbm = ISBM(X, pn, threshold=5, adaptive=True)
+    isbm.fit()
     # sp.plot_grid(f'ISBM on {Title}', X, pn, sbm_graph_labels, marker='o', adaptivePN=True)
-    sp.plot(f'ISBM on {Title}', X, sbm_graph_labels, marker='o', alpha=0.5)
+    sp.plot(f'ISBM on {Title}', X, isbm.labels, marker='o', alpha=0.5)
 
     plt.show()
 
@@ -275,9 +300,10 @@ def load_atoms_synthetic_data():
 
 
 if __name__ == '__main__':
-    run_ISBM_graph_on_simulated_data()
-    # run_ISBM_graph_on_real_data()
-    # run_ISBM_graph_on_real_data_tetrode()
+    run_SBM_on_simulated_data()
+    run_ISBM_on_simulated_data()
+    # run_ISBM_on_real_data()
+    # run_ISBM_on_real_data_tetrode()
     # check_performances_against_scs(pn=10)
     # check_performances_against_scs(pn=25)
 

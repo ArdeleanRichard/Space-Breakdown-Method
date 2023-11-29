@@ -1,5 +1,32 @@
 import numpy as np
 
+neighbour_4offsets = np.array(
+    [
+        [-1, 0],
+        [0, -1],
+        [0, 1],
+        [1, 0],
+    ]
+)
+
+neighbour_8offsets = np.array(
+    [
+        [-1, -1],
+        [-1, 0],
+        [-1, 1],
+        [0, -1],
+        [0, 1],
+        [1, -1],
+        [1, 0],
+        [1, 1],
+    ]
+)
+
+def get_neighbours8(point):
+    return point+neighbour_8offsets
+
+def get_valid_neighbours8(point, shape):
+    return validate_neighbours(point+neighbour_8offsets, shape)
 
 def get_valid_neighbours(point, shape):
     neighbours = get_neighbours(point)

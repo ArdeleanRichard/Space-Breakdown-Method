@@ -1,12 +1,8 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import plotly.express as px
-from scipy.signal import find_peaks
-from sklearn.decomposition import PCA
 
 import visualization.label_map as cs
-from dataset_parsing import simulations_dataset as ds
-import seaborn as sns
 
 
 
