@@ -35,7 +35,7 @@ The Improved Space Breakdown Method has been published in Frontiers in Computati
 https://www.frontiersin.org/articles/10.3389/fncom.2023.1019637/full
 
 The algorithm has been improved since its publishing by modifying the underlying data structure from an ndarray to a graph. The following image show the improvement of a simple example from 25 cells in the ndarray to only 22 nodes in the graph.
-![SBM structures](/images/isbm_struct.PNG?raw=true)
+![SBM structures](/images/isbm_struct.png?raw=true)
 
 Another improvement, added later to the algorithm is an adaptive Partitioning Number, influenced by the variance of each feature. This shall improve the complexity of the algorithm a bit and will allow the use of the algorithm on datasets of higher dimensions.
 ![Improvement](/images/isbm.png?raw=true)
@@ -44,7 +44,7 @@ Another improvement, added later to the algorithm is an adaptive Partitioning Nu
 # Time-Frequency Breakdown Method
 TFBM is a method, based on SBM, developed for the detection of brain oscillations in time-frequency representations (such as spectrograms obtained from the Fourier Transform).
 
-![TFBM](/images/tfbm.PNG?raw=true)
+![TFBM](/images/tfbm.png?raw=true)
 
 # Citations
 ## SBM
