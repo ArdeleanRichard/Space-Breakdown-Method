@@ -31,7 +31,7 @@ The paths to the data folder on your local workstation need to be set from the '
 
 
 # Improved Space Breakdown Method
-The Improved Space Breakdown Method has been published in Frontiers in Computational Neuroscience: 
+The Improved Space Breakdown Method (ISBM) has been published in Frontiers in Computational Neuroscience: 
 https://www.frontiersin.org/articles/10.3389/fncom.2023.1019637/full
 
 The algorithm has been improved since its publishing by modifying the underlying data structure from an ndarray to a graph. The following image show the improvement of a simple example from 25 cells in the ndarray to only 22 nodes in the graph.
@@ -42,7 +42,10 @@ Another improvement, added later to the algorithm is an adaptive Partitioning Nu
 
 
 # Time-Frequency Breakdown Method
-TFBM is a method, based on SBM, developed for the detection of brain oscillations in time-frequency representations (such as spectrograms obtained from the Fourier Transform).
+The Time-Frequency Breakdown Method (TFBM) has been published in Frontiers in Human Neuroscience:
+https://www.frontiersin.org/articles/10.3389/fnhum.2023.1112415/full
+
+TFBM is a method, based on SBM, developed for the detection of brain oscillations in time-frequency representations (such as spectrograms obtained from the Fourier Transform). 
 
 ![TFBM](/images/tfbm.png?raw=true)
 
@@ -72,7 +75,7 @@ We would appreciate it, if you cite the paper when you use this work for the ISB
 
 - For Plain Text:
 ```
-E.-R. Ardelean, A.-M. Ichim, M. Dînşoreanu, and R. C. Mureşan, “Improved space breakdown method – A robust clustering technique for spike sorting,” Frontiers in Computational Neuroscience, vol. 17, 2023
+E.-R. Ardelean, A.-M. Ichim, M. Dînşoreanu, and R. C. Mureşan, “Improved space breakdown method – A robust clustering technique for spike sorting,” Frontiers in Computational Neuroscience, vol. 17, 2023, doi: 10.3389/fncom.2023.1019637.
 ```
 
 - BibTex:
@@ -93,12 +96,20 @@ We would appreciate it, if you cite the paper when you use this work for the TFB
 
 - For Plain Text:
 ```
-
+E.-R. Ardelean, H. Bârzan, A.-M. Ichim, R. C. Mureşan, and V. V. Moca, “Sharp detection of oscillation packets in rich time-frequency representations of neural signals,” Frontiers in Human Neuroscience, vol. 17, 2023, doi: 10.3389/fnhum.2023.1112415.
 ```
 
 - BibTex:
 ```
-
+@ARTICLE{10.3389/fnhum.2023.1112415,
+AUTHOR={Ardelean, Eugen-Richard and Bârzan, Harald and Ichim, Ana-Maria and Mureşan, Raul Cristian and Moca, Vasile Vlad},   
+TITLE={Sharp detection of oscillation packets in rich time-frequency representations of neural signals},      
+JOURNAL={Frontiers in Human Neuroscience},      
+VOLUME={17},           
+YEAR={2023},      
+URL={https://www.frontiersin.org/articles/10.3389/fnhum.2023.1112415},       
+DOI={10.3389/fnhum.2023.1112415}
+}
 ```
 
 # Contact
