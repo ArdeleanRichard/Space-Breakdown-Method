@@ -12,7 +12,7 @@ Overlapping clusters and different density clusters are recurrent phenomena of n
 SBM results in comparison with K-Means and DBSCAN:
 - on a real dataset
 ![Real Data](/images/real_data.PNG?raw=true)
-- on a simulated dataset 
+- on a simulated dataset (from the Department of Engineering, University of Leicester UK)
 ![Simulated Data](/images/simulated_data.PNG?raw=true)
 
 ## Git repository structure
@@ -25,7 +25,7 @@ The code folder structure:
 - common/validation/visualization: utilitary functions
 
 ## Setup
-The 'requirements.txt' file indicates the dependencies required for running the code. The data used in this study can be downloaded from: https://1drv.ms/u/s!AgNd2yQs3Ad0gSjeHumstkCYNcAk?e=QfGIJO. 
+The 'requirements.txt' file indicates the dependencies required for running the code. The data used in this study can be downloaded from: https://1drv.ms/u/s!AgNd2yQs3Ad0gSjeHumstkCYNcAk?e=QfGIJO. The simulated data has been created by the Department of Engineering, University of Leicester UK.
 
 The paths to the data folder on your local workstation need to be set from the 'constants.py' file (DATA_FOLDER_PATH, SIM_DATA_FOLDER_PATH, REAL_DATA_FOLDER_PATH).
 
