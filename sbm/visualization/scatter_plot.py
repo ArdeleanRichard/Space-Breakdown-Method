@@ -3,7 +3,7 @@ import numpy as np
 from mpl_toolkits.mplot3d import Axes3D
 from sklearn import preprocessing
 
-from visualization import label_map as cs
+from .label_map import LABEL_COLOR_MAP
 
 def data_preprocessing(spikes, pn, adaptivePN=False):
     """
@@ -55,7 +55,7 @@ def plot(title, X, labels=None, plot=True, marker='o', alpha=1):
                 plt.scatter(X[:, 0], X[:, 1], marker=marker, edgecolors='k')
             else:
                 try:
-                    label_color = [cs.LABEL_COLOR_MAP[l] for l in labels]
+                    label_color = [LABEL_COLOR_MAP[l] for l in labels]
                 except KeyError:
                     print('Too many labels! Using default colors...\n')
                     label_color = [l for l in labels]
@@ -68,7 +68,7 @@ def plot(title, X, labels=None, plot=True, marker='o', alpha=1):
                 ax.scatter(X[:, 0], X[:, 1], X[:, 2], marker=marker, edgecolors='k')
             else:
                 try:
-                    label_color = [cs.LABEL_COLOR_MAP[l] for l in labels]
+                    label_color = [LABEL_COLOR_MAP[l] for l in labels]
                 except KeyError:
                     print('Too many labels! Using default colors...\n')
                     label_color = [l for l in labels]
@@ -90,7 +90,7 @@ def plot_grid(title, X, pn, labels=None, plot=True, marker='o', adaptivePN=False
     X, pn = data_preprocessing(X, pn, adaptivePN=adaptivePN)
     if plot:
         nrDim = len(X[0])
-        label_color = [cs.LABEL_COLOR_MAP[l] for l in labels]
+        label_color = [LABEL_COLOR_MAP[l] for l in labels]
         fig = plt.figure()
         plt.title(title)
         if nrDim == 2:

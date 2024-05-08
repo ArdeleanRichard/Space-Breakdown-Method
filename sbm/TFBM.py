@@ -1,17 +1,16 @@
 import copy
 import time
 import random
+from collections import deque
 
 import numpy as np
-
+import matplotlib.pyplot as plt
 from scipy.ndimage import maximum_filter
 from sklearn.preprocessing import LabelEncoder
 
-from collections import deque
-
-from common.distance import euclidean_point_distance_scale_fast
-from common.neighbourhood import get_valid_neighbours8
-from preprocess.data_scaling import normalize_data_min_max
+from .common.distance import euclidean_point_distance_scale_fast
+from .common.neighbourhood import get_valid_neighbours8
+from .preprocess.data_scaling import normalize_data_min_max
 
 
 class PacketInfo:
@@ -427,3 +426,33 @@ class TFBM:
                 self.packet_infos[id].updated_contour_points = np.array(copy.deepcopy(self.packet_infos[id].contour_points))
 
 
+    def plot_result(self, title, data, labelsMatrix, packet_infos):
+        center_coords = [(pi.center_coords[1], pi.center_coords[0]) for pi in packet_infos]
+
+        fig = plt.figure(figsize=(24, 6))
+        fig.suptitle(title, fontsize=16)
+        ax = fig.add_subplot(1, 3, 1)
+
+        ax.set_title("Initial Data")
+        im = ax.imshow(data, aspect='auto', cmap='jet', interpolation='none')
+        ax.invert_yaxis()
+        plt.colorbar(im)
+
+        ax = fig.add_subplot(1, 3, 2)
+        ax.set_title("Mask")
+        im = ax.imshow(labelsMatrix, aspect='auto', cmap='jet', interpolation='none')
+        ax.invert_yaxis()
+        plt.colorbar(im)
+
+        for center_coord in center_coords:
+            plt.scatter(center_coord[1], center_coord[0], s=1, c='black', marker='o')
+
+        masked = apply_mask(data, labelsMatrix)
+
+        ax = fig.add_subplot(1, 3, 3)
+        ax.set_title("Segmentation")
+        im = ax.imshow(masked, aspect='auto', cmap='jet', interpolation='none')
+        plt.colorbar(im)
+        ax.invert_yaxis()
+
+        plt.show()

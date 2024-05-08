@@ -1,7 +1,7 @@
 import os
 import numpy as np
 import matplotlib.pyplot as plt
-from dataset_parsing.realdata_ssd import get_data_from_unit, plot_sorted_data
+from .realdata_ssd import get_data_from_unit, plot_sorted_data
 
 TIMESTAMP_LENGTH = 1
 NR_CHANNELS = 33

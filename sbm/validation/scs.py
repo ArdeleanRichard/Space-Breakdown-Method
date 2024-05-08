@@ -1,6 +1,6 @@
 import numpy as np
 
-def scs_metric(true_labels, predicted_labels):
+def spike_cluster_score(true_labels, predicted_labels):
     score = 0
     for unique_true_label in np.unique(true_labels):
         only_true_label = true_labels == unique_true_label

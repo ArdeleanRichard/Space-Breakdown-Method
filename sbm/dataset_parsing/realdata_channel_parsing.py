@@ -1,8 +1,8 @@
 import numpy as np
 from matplotlib import pyplot as plt
 
-from dataset_parsing.realdata_channel import parse_epd_file
-from dataset_parsing.realdata_parsing import read_data
+from .realdata_channel import parse_epd_file
+from .realdata_parsing import read_data
 
 DATASET_PATH = '../../datasets/real_data/M014/classic/'
 NR_CHANNELS = 33

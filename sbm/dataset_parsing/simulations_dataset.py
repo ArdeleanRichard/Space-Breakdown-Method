@@ -1,7 +1,7 @@
 import numpy as np
 from scipy.io import loadmat
 from sklearn.decomposition import PCA
-from constants import DATA_FOLDER_PATH, SIM_DATA_FOLDER_PATH
+from ..constants import DATA_FOLDER_PATH, SIM_DATA_FOLDER_PATH
 
 
 def load_dictionaries(simNr):

@@ -7,11 +7,11 @@ import numpy as np
 from matplotlib import pyplot as plt
 from sklearn import preprocessing
 
-from common.distance import euclidean_point_distance
-from common.maxima import check_maxima, check_maxima_no_neighbour_maxim
-from common.neighbourhood import get_valid_neighbours
-from dataset_parsing.simulations_dataset import get_dataset_simulation_pca_2d
-from visualization import scatter_plot as sp
+from .common.distance import euclidean_point_distance
+from .common.maxima import check_maxima, check_maxima_no_neighbour_maxim
+from .common.neighbourhood import get_valid_neighbours
+from .dataset_parsing.simulations_dataset import get_dataset_simulation_pca_2d
+from .visualization import scatter_plot as sp
 
 warnings.simplefilter(action='ignore', category=FutureWarning)
 

@@ -1,7 +1,7 @@
-from constants import DATA_FOLDER_PATH, REAL_DATA_FOLDER_PATH
-from dataset_parsing.realdata_ssd_1electrode import parse_ssd_file
-from dataset_parsing.realdata_parsing import read_timestamps, read_waveforms
-from dataset_parsing.realdata_ssd import find_ssd_files, separate_by_unit, units_by_channel
+from ..constants import DATA_FOLDER_PATH, REAL_DATA_FOLDER_PATH
+from .realdata_ssd_1electrode import parse_ssd_file
+from .realdata_parsing import read_timestamps, read_waveforms
+from .realdata_ssd import find_ssd_files, separate_by_unit, units_by_channel
 
 
 

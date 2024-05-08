@@ -1,6 +1,6 @@
 import numpy as np
 
-from common.neighbourhood import get_valid_neighbours
+from .neighbourhood import get_valid_neighbours
 
 
 def check_maxima(array, point):

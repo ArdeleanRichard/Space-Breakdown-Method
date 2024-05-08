@@ -3,7 +3,7 @@ import numpy as np
 from matplotlib import pyplot as plt
 from sklearn.decomposition import PCA
 
-from visualization import scatter_plot as sp
+from ..visualization import scatter_plot as sp
 
 
 def find_ssd_files(DATASET_PATH):

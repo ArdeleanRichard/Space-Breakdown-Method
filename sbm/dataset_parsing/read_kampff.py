@@ -1,9 +1,9 @@
 import numpy as np
 
-from dataset_parsing.realdata_ssd_1electrode import parse_ssd_file
-from dataset_parsing.realdata_parsing import read_timestamps, read_waveforms, read_event_timestamps, \
+from .realdata_ssd_1electrode import parse_ssd_file
+from .realdata_parsing import read_timestamps, read_waveforms, read_event_timestamps, \
     read_event_codes
-from dataset_parsing.realdata_ssd import find_ssd_files, separate_by_unit, units_by_channel
+from .realdata_ssd import find_ssd_files, separate_by_unit, units_by_channel
 
 
 def read_kampff_c37():

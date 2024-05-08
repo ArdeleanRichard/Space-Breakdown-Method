@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import plotly.express as px
 
-import visualization.label_map as cs
+from .label_map import LABEL_COLOR_MAP
 
 
 
@@ -48,7 +48,7 @@ def plot_spikes_by_clusters(spikes, labels, mean=True):
             else:
                 plt.plot(spike)
         if mean == True:
-            plt.plot(np.mean(spikes[labels==lab], axis=0), cs.LABEL_COLOR_MAP[lab])
+            plt.plot(np.mean(spikes[labels==lab], axis=0), LABEL_COLOR_MAP[lab])
     plt.show()
 
 

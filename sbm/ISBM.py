@@ -8,11 +8,11 @@ from mpl_toolkits.mplot3d import Axes3D
 from sklearn import preprocessing
 import networkx as nx
 
-from common.distance import euclidean_point_distance
-from common.neighbourhood import get_neighbours
-from dataset_parsing.simulations_dataset import get_dataset_simulation_pca_2d
-from visualization import scatter_plot as sp
-from visualization.label_map import LABEL_COLOR_MAP
+from .common.distance import euclidean_point_distance
+from .common.neighbourhood import get_neighbours
+from .dataset_parsing.simulations_dataset import get_dataset_simulation_pca_2d
+from .visualization import scatter_plot as sp
+from .visualization.label_map import LABEL_COLOR_MAP
 
 
 class ISBM:

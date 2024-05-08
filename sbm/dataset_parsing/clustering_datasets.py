@@ -3,7 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 # constants for particular datasets
-from constants import dataFiles, dataName, DATA_FOLDER_PATH
+from ..constants import dataFiles, dataName, DATA_FOLDER_PATH
 
 kmeansValues = [15, 15, 8, 6, 20]
 epsValues = [27000, 45000, 18000, 0.5, 0.1]

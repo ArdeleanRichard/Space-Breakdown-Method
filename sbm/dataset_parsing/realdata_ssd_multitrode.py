@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.decomposition import PCA
 
-from dataset_parsing.realdata_ssd import plot_sorted_data
+from .realdata_ssd import plot_sorted_data
 
 NR_CHANNELS_MULTITRODE = 4
 NR_MULTITRODES = 8
