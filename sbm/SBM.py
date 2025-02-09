@@ -7,11 +7,11 @@ import numpy as np
 from matplotlib import pyplot as plt
 from sklearn import preprocessing
 
-from .common.distance import euclidean_point_distance
-from .common.maxima import check_maxima, check_maxima_no_neighbour_maxim
-from .common.neighbourhood import get_valid_neighbours
-from .dataset_parsing.simulations_dataset import get_dataset_simulation_pca_2d
-from .visualization import scatter_plot as sp
+from sbm.common.distance import euclidean_point_distance
+from sbm.common.maxima import check_maxima, check_maxima_no_neighbour_maxim
+from sbm.common.neighbourhood import get_valid_neighbours
+from sbm.dataset_parsing.simulations_dataset import get_dataset_simulation_pca_2d
+from sbm.visualization import scatter_plot as sp
 
 warnings.simplefilter(action='ignore', category=FutureWarning)
 
@@ -271,7 +271,7 @@ class SBM:
 
         # adding (the counts) in the nArray using the coordinates of R
         R = np.transpose(R).tolist()
-        np.add.at(self.chunk_array, R, 1)
+        np.add.at(self.chunk_array, tuple(R), 1)
 
 
 
@@ -288,7 +288,7 @@ class SBM:
 
         # get the coordinates in the nArray (of all points) in Q and use that to set the labels of all the points in the dataset
         Q = np.transpose(R).tolist()
-        self.labels = self.labels_array[Q]
+        self.labels = self.labels_array[tuple(Q)]
 
 
 
