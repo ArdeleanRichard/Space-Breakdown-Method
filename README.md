@@ -107,7 +107,8 @@ E. Ardelean, A. Stanciu, M. Dinsoreanu, R. Potolea, C. Lemnaru and V. V. Moca, "
   volume={},
   number={},
   pages={419-425},
-  doi={10.1109/ICCP48234.2019.8959795}}
+  doi={10.1109/ICCP48234.2019.8959795}
+}
 ```
 ## ISBM
 We would appreciate it, if you cite the paper when you use this work for the ISBM (improved SBM) algorithm:
@@ -120,13 +121,13 @@ E.-R. Ardelean, A.-M. Ichim, M. Dînşoreanu, and R. C. Mureşan, “Improved sp
 - BibTex:
 ```
 @ARTICLE{10.3389/fncom.2023.1019637,
-AUTHOR={Ardelean, Eugen-Richard and Ichim, Ana-Maria and Dînşoreanu, Mihaela and Mureşan, Raul Cristian},   
-TITLE={Improved space breakdown method – A robust clustering technique for spike sorting},      
-JOURNAL={Frontiers in Computational Neuroscience},      
-VOLUME={17},           
-YEAR={2023},      
-URL={https://www.frontiersin.org/articles/10.3389/fncom.2023.1019637},       
-DOI={10.3389/fncom.2023.1019637}      
+  AUTHOR={Ardelean, Eugen-Richard and Ichim, Ana-Maria and Dînşoreanu, Mihaela and Mureşan, Raul Cristian},   
+  TITLE={Improved space breakdown method – A robust clustering technique for spike sorting},      
+  JOURNAL={Frontiers in Computational Neuroscience},      
+  VOLUME={17},           
+  YEAR={2023},      
+  URL={https://www.frontiersin.org/articles/10.3389/fncom.2023.1019637},       
+  DOI={10.3389/fncom.2023.1019637}      
 }
 ```
 
@@ -141,13 +142,13 @@ E.-R. Ardelean, H. Bârzan, A.-M. Ichim, R. C. Mureşan, and V. V. Moca, “Shar
 - BibTex:
 ```
 @ARTICLE{10.3389/fnhum.2023.1112415,
-AUTHOR={Ardelean, Eugen-Richard and Bârzan, Harald and Ichim, Ana-Maria and Mureşan, Raul Cristian and Moca, Vasile Vlad},   
-TITLE={Sharp detection of oscillation packets in rich time-frequency representations of neural signals},      
-JOURNAL={Frontiers in Human Neuroscience},      
-VOLUME={17},           
-YEAR={2023},      
-URL={https://www.frontiersin.org/articles/10.3389/fnhum.2023.1112415},       
-DOI={10.3389/fnhum.2023.1112415}
+  AUTHOR={Ardelean, Eugen-Richard and Bârzan, Harald and Ichim, Ana-Maria and Mureşan, Raul Cristian and Moca, Vasile Vlad},   
+  TITLE={Sharp detection of oscillation packets in rich time-frequency representations of neural signals},      
+  JOURNAL={Frontiers in Human Neuroscience},      
+  VOLUME={17},           
+  YEAR={2023},      
+  URL={https://www.frontiersin.org/articles/10.3389/fnhum.2023.1112415},       
+  DOI={10.3389/fnhum.2023.1112415}
 }
 ```
 
